@@ -1,0 +1,2068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>API Test Report</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/styles/default.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+
+
+<style>
+code.renderMarkdown table, code.renderMarkdown th, code.renderMarkdown td {
+    border: 1px solid black;
+    width: max-content;
+    padding: .75rem;
+}
+
+.theme-dark {
+    --background-color: #222;
+    --bg-card-deck: #444444;
+    --text-color: #ccd2d8;
+    --tab-border: solid 1px #444;
+    --success: #3c9372;
+    --failure: #c24a3f;
+    --warning: #d28c23;
+    --info: #4083b6;
+    --badge-outline: #3c9372;
+    --badge-bg: #cdd3db;
+    --badge-text: #ccd2d9;
+    --failure-row: #c24a3f;
+    --warning-row: #d28c23;
+    --card-bg: #444;
+    --card-footer: #4f5758;
+    --form-input: #ececb5;
+    --hov-text: #d2dae5;
+    --h4-text: #ccd1d9;
+}
+
+.theme-light {
+    --tab-border: solid 1px #fff;
+    --text-color: #000000;
+    --success: #42a745;
+    --failure: #dc3544;
+    --warning: #f4c10b;
+    --info: #49a1b8;
+    --badge-outline: #040411;
+    --badge-bg: #f8f9fa;
+    --badge-text: #fff;
+    --failure-row: #f5c6cb;
+    --warning-row: #ffeeba;
+    --card-bg: #f7f7f7;
+    --hov-text: #fff;
+    --h4-text: #ffffff;
+}
+
+body {
+  padding-top:30px;
+  background-color: var(--background-color)!important;
+  color: var(--text-color);
+}
+
+#execution-data {
+  padding: 10px;
+  border: var(--tab-border);
+  border-top: none;
+}
+
+.nav-tabs {
+  padding-top: 10px;
+  height: 105px;
+  overflow-y: auto;
+}
+
+body.theme-dark .card-header {
+    background-color: #444;
+}
+
+body.theme-light .card-header {
+    background-color: #f7f7f7;
+}
+
+.card-footer {
+    padding: .75rem 1.25rem;
+    background-color: var(--card-footer);
+}
+
+.card-deck {
+    background-color: var(--bg-card-deck)!important;
+}
+.form-control {
+    background: var(--form-input);
+}
+
+.custom-tab {
+  padding: 10px 15px;
+  margin-right: 0px;
+  height: 47px;
+  width: 69px;
+  text-align: center;
+  border: var(--tab-border);
+  border-bottom: none;
+  cursor:pointer;
+}
+
+body.theme-dark .text-white {
+    color: #ccd2d9!important;
+}
+h4 {
+    color: var(--h4-text);
+}
+
+body.theme-dark h1 {
+    color: #ccd2da;
+}
+
+body.theme-dark .bg-light>td {
+    background: #4f5858!important;
+}
+
+body.theme-dark .hljs {
+    background: #0a0a0ab0!important;
+    color: #8d8787!important;
+}
+
+.bg-info {
+    background-color: var(--info)!important;
+}
+.bg-success {
+    background-color: var(--success)!important;
+}
+
+.alert-success {
+    background-color: var(--success)!important;
+}
+
+.alert-warning {
+    background-color: var(--warning)!important;
+    border-color: var(--warning)!important;
+}
+
+.alert-info {
+    background-color: var(--info)!important;
+}
+
+.bg-warning {
+    background-color: var(--warning)!important;
+}
+
+.badge-warning {
+    color: var(--badge-text)!important;
+    background-color: var(--warning)!important;
+}
+
+.table-warning>td {
+    background-color: var(--warning-row);
+}
+
+.alert-danger {
+    background-color: var(--failure)!important;
+}
+
+body.theme-dark .alert-dark {
+    background-color: #636467!important;
+    color: #ccd2d8;
+}
+
+body.theme-dark .text-dark {
+    color: #d1dae4!important;
+}
+
+body.theme-dark .badge-light {
+    color: #212529;
+    background-color: #cdd3db;
+}
+
+body.theme-light .badge-light {
+    color: #212529;
+    background-color: #f8f9fa;
+}
+body.theme-light .bg-danger {
+    background-color: var(--failure)!important;
+}
+
+body.theme-dark .bg-danger {
+    background-color: var(--failure)!important;
+}
+
+.table-danger>td {
+    background-color: var(--failure-row);
+}
+
+body.theme-dark .table .thead-light th {
+    background-color: #4f5858!important;
+    border-color: #dee2e6!important;
+    color: #ccd2d8!important;
+}
+
+.itPassed {
+  background: var(--success);
+  color: white;
+}
+.itFailed {
+  background: var(--failure);
+  color: white;
+}
+
+.resultsInfoPass {
+  color: var(--success);
+  padding-top: 4px;
+}
+
+.resultsInfoFail {
+  color: var(--failure);
+  padding-top: 4px;
+}
+
+.badge-outline-success {
+  color: var(--success);
+  border: 1px solid var(--success);
+  background-color: transparent;
+}
+
+.badge-outline {
+  color: var(--badge-outline);
+  border: 1px solid var(--badge-outline);
+  background-color: transparent;
+}
+
+.btn-outline-success {
+    color: var(--success)!important;
+    border-color: var(--success)!important;
+}
+
+.backToTop:hover {
+  background-color: var(--success);
+  border-color: var(--success);
+  color: var(--hov-text)!important;
+}
+
+.btn-outline-success:hover {
+  background-color: var(--success);
+  border-color: var(--success);
+  color: var(--hov-text)!important;
+}
+
+.btn-outline-secondary {
+  background-color: var(--success)!important;
+  color: var(--hov-text)!important;
+}
+
+body.theme-dark .env-heading {
+    color: #ccd2d9!important;
+}
+
+body, html {
+  height:100%;
+}
+
+.card {
+  overflow:hidden;
+}
+
+body.theme-dark .card-body {
+    background-color: #444;
+}
+
+body.theme-light .card-body {
+    background-color: #f7f7f7;
+}
+
+body.theme-dark .card-body .bg-danger {
+    background-color: var(--failure)!important;
+}
+
+body.theme-light .card-body .bg-danger {
+    background-color: var(--failure)!important;
+}
+
+.card-body .rotate {
+  z-index: 8;
+  float: right;
+  height: 100%;
+}
+
+.card-body .rotate i {
+  color: #14141426;
+  position: absolute;
+  left: 0;
+  left: auto;
+  right: -10px;
+  bottom: 0;
+  display: block;
+  -webkit-transform: rotate(-44deg);
+  -moz-transform: rotate(-44deg);
+  -o-transform: rotate(-44deg);
+  -ms-transform: rotate(-44deg);
+  transform: rotate(-44deg);
+}
+
+.dyn-height {
+  max-height:350px;
+  overflow-y:auto;
+}
+
+.nav-pills .nav-link.active {
+  background-color: transparent!important;
+}
+
+.backToTop {
+  display: none;
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  z-index: 99;
+  font-size: 15px;
+  outline: none;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+.card-header .fa {
+  transition: .3s transform ease-in-out;
+}
+.card-header .collapsed .fa {
+  transform: rotate(90deg);
+}
+
+.single-line-tabs {
+  padding-top: 10px;
+  height: 60px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 20px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 0px;
+  bottom: 4px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  box-shadow: 0 0px 15px #2020203d;
+  background: white;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+input:checked + .slider {
+  background-color: #4083b6;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #4083b6;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
+  background: white;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+table.dataTable td, table.dataTable tr {
+    vertical-align: middle;
+} 
+
+body.theme-dark code {
+    color: #ccd2d8!important;
+} 
+
+body.theme-light code {
+    color: #000000!important;
+} 
+
+.text-wrap {
+    word-wrap: break-word; 
+    min-width: 600px; 
+    max-width: 600px; 
+    white-space: normal;
+}
+
+</style>
+</head>
+<body>
+  <div class="container">
+        <div class="container">
+            <label>Light</label>
+            <label id="switch" class="switch">
+                <input type="checkbox" onchange="toggleTheme()" id="slider">
+                <span class="slider round"></span>
+            </label>
+            <label>Dark</label>
+        </div>
+        <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-pills mb-3 nav-justified" id="pills-tab" role="tablist">
+            <li class="nav-item bg-info active" data-toggle="tooltip" title="Click to view the Summary">
+                <a class="nav-link text-white" id="pills-summary-tab" data-toggle="pill" href="#pills-summary" role="tab" aria-controls="pills-summary" aria-selected="true">Summary</a>
+            </li>
+            <li class="nav-item bg-success" data-toggle="tooltip" title="Click to view the Requests">
+                <a class="nav-link text-white" id="pills-requests-tab" data-toggle="pill" href="#pills-requests" role="tab" aria-controls="pills-requests" aria-selected="false">Total Requests <span class="badge badge-light">43</span></a>
+            </li>
+            <li class="nav-item bg-danger" data-toggle="tooltip" title="Click to view the Failed Tests">
+                <a class="nav-link text-white" id="pills-failed-tab" data-toggle="pill" href="#pills-failed" role="tab" aria-controls="pills-failed" aria-selected="false">Failed Tests <span class="badge badge-light">0</span></a>
+            </li>
+            <li class="nav-item bg-warning" data-toggle="tooltip" title="Click to view the Skipped Tests">
+                <a class="nav-link text-white" id="pills-skipped-tab" data-toggle="pill" href="#pills-skipped" role="tab" aria-controls="pills-skipped" aria-selected="false">Skipped Tests <span class="badge badge-light">0</span></a>
+            </li>
+            </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-summary" role="tabcard" aria-labelledby="pills-summary-tab"> 
+<div class="row">
+  <div class="col-md-9 col-lg-12 main">
+   <h1 class="display-2 text-center">Consumer Stage Test</h1>
+   <h5 class="text-center">Thursday, 15 May 2025 23:07:22</h5>
+   <div class="row">
+    <div class="col-lg-3 col-md-6">
+     <div class="card text-white card-success">
+      <div class="card-body bg-success">
+       <div class="rotate">
+        <i class="fa fa-retweet fa-5x"></i>
+       </div>
+       <h6 class="text-uppercase">Total Iterations</h6>
+       <h1 class="display-1">1</h1>
+      </div>
+     </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+     <div class="card text-white card-danger">
+      <div class="card-body bg-success">
+       <div class="rotate">
+        <i class="fa fa-list fa-4x"></i>
+       </div>
+       <h6 class="text-uppercase">Total Assertions</h6>
+       <h1 class="display-1">143</h1>
+      </div>
+     </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+     <div class="card text-white card-info">
+      <div class="card-body bg-success">
+       <div class="rotate">
+        <i class="fa fa-plus-circle fa-5x"></i>
+       </div>
+       <h6 class="text-uppercase">Total Failed Tests</h6>
+       <h1 class="display-1">0</h1>
+      </div>
+     </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+     <div class="card text-white card-warning">
+      <div class="card-body bg-success">
+       <div class="rotate">
+        <i class="fa fa-share fa-5x"></i>
+       </div>
+       <h6 class="text-uppercase">Total Skipped Tests</h6>
+       <h1 class="display-1">0</h1>
+      </div>
+     </div>
+    </div>
+   </div>
+   <hr>
+    <div class="row">
+    <div class="col">
+        <div class="row">
+        <div class="col-sm-12 mb-3">
+            <div class="card border-info">
+                <div class="card-body">
+                <h5 class="card-title text-uppercase text-white text-center bg-info">File Information</h5>
+                <span><i class="fas fa-file-code"></i></span><strong> Collection:</strong> API_Automation<br>
+                
+                <span><i class="fas fa-file-code"></i></span><strong> Environment:</strong> Consumer/stage<br>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12 mb-3">
+            <div class="card border-info">
+                <div class="card-body">          
+                <h5 class="card-title text-uppercase text-white text-center bg-info">Collection Description</h5>
+                <div class="dyn-height">
+                    <pre class="renderMarkdown"># 📘 API Automation Test Collection
+
+### 🔍 Overview
+
+This collection includes automated tests for key API endpoints including cart operations, coupon application, combo validation, order creation, and user profile verification.
+
+### ℹ️ **Pre-requisites:**
+
+- 📦 Products should be available to place order (VM 8): 102, 103
+    
+- 🎟️ Coupons should be available(307)
+    
+- 🍱 Combos should be available (601, 905)
+    
+
+### 🌐 Environments
+
+- &#x60;{{base_url}}&#x60;: API Base URL
+    
+- &#x60;{{authToken}}&#x60;: Bearer Token
+    
+- &#x60;{{orderId}}&#x60;: Captured after order creation
+    
+
+---
+
+### ✅ Completed Test Cases
+
+- Successful Authentication with Token Storage
+    
+- VM Interactions
+    
+- Cart Operations
+    
+- Order Placement with Daalchini Points
+    
+- Orders with Combo
+    
+- Orders with Discount Coupon
+    
+- User Profile Details Verification
+    
+- Loyalty Level Info with Level Name
+    
+- Order Creation Success &amp; Order ID Storage
+    
+- Logout
+    
+
+---
+
+### 📝 To-Do List
+
+- Coupon Application Error Handling (5XX) and CashBack coupon
+    
+- Payments with Business Payment
+    
+- Payments with RazorPay (sand box environment) if possible
+    
+- Payments Error Handling
+    
+- Error Handling with Combo Cart and Normal Cart
+    
+- Profile Update API Validation
+    
+- Gift Card Redemption
+    
+
+---
+
+### 🚀 Next Steps
+
+- Integrate with CI/CD via Newman
+    
+- Add data-driven tests with CSV/JSON runner
+    
+- Link environment-specific test reports</pre>
+                </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12 mb-3">
+            <div class="card border-info">
+                <div class="card-body">
+                <h5 class="card-title text-uppercase text-white text-center bg-info">Timings and Data</h5>
+                <span><i class="fas fa-stopwatch"></i></span><strong> Total run duration:</strong> 11.2s<br>
+                <span><i class="fas fa-database"></i></span><strong> Total data received:</strong> 56.67KB<br>
+                <span><i class="fas fa-stopwatch"></i></span><strong> Average response time:</strong> 172ms<br>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-sm-12 mb-3">
+            <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="thead-inverse">
+                    <tr class="text-center">
+                        <th class="text-uppercase">Summary Item</th>
+                        <th class="text-uppercase">Total</th>
+                        <th class="text-uppercase">Failed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Requests</td>
+                        <td class="text-center">43</td>
+                        <td class="text-center">0</td>
+                    </tr>
+                    <tr>
+                        <td>Prerequest Scripts</td>
+                        <td class="text-center">47</td>
+                        <td class="text-center">0</td>
+                    </tr>
+                    <tr>
+                        <td>Test Scripts</td>
+                        <td class="text-center">83</td>
+                        <td class="text-center">0</td>
+                    </tr>
+                    <tr class="">
+                        <td>Assertions</td>
+                        <td class="text-center">143</td>
+                        <td class="text-center">0</td>
+                    </tr>
+                    <tr class="">
+                        <td>Skipped Tests</td>
+                        <td class="text-center">0</td>
+                        <td class="text-center">-</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+        </div>
+    <hr>
+   </div>
+   </div>
+  </div>
+ </div>
+        </div>
+            <div class="tab-pane fade" id="pills-failed" role="tabcard" aria-labelledby="pills-failed-tab">
+                <button id="topOfFailuresScreen" class="btn btn-outline-success btn-sm backToTop" onclick="topFunction()">Go To Top</button>
+                <div class="alert alert-success text-uppercase text-center">
+                     <br><br><h1 class="text-center">There are no failed tests <span><i class="far fa-thumbs-up"></i></span></h1><br><br>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="pills-skipped" role="tabcard" aria-labelledby="pills-skipped-tab">
+                <button id="topOfSkippedScreen" class="btn btn-outline-success btn-sm backToTop" onclick="topFunction()">Go To Top</button>
+                <div class="alert alert-success text-uppercase text-center">
+                    <br><br><h1 class="text-center">There are no skipped tests <span><i class="far fa-thumbs-up"></i></span></h1><br><br>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="pills-requests" role="tabcard" aria-labelledby="pills-requests-tab">
+            
+            <button id="topOfRequestsScreen" class="btn btn-outline-success btn-sm backToTop" onclick="topFunction()">Go To Top</button>
+
+            <div class="btn-group float-right" role="group" aria-label="Button Group">
+                <button id="openAllRequests" class="btn btn-outline-success btn-sm float-right" style="text-align: center; width: 140px;">Expand Requests</button>
+            </div>
+
+    <div class="text-uppercase" id="execution-menu">
+        <h5>1 Iteration available to view</h5>
+        
+        <ul class="nav single-line-tabs" id="iterationList">
+        </ul>
+    </div>
+    <h6 class="text-uppercase text-muted" id="iterationSelected" style="padding-top: 10px;"></h6>
+	<div class="tab-content" id="execution-data">
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            Login Module - 3 Requests in the folder
+        </div>
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            Global search - 7 Requests in the folder
+        </div>
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            Cart Management - 6 Requests in the folder
+        </div>
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            OrderPlacement - 6 Requests in the folder
+        </div>
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            VM_Interactions - 4 Requests in the folder
+        </div>
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            Combo Offers - 7 Requests in the folder
+        </div>
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            Apply_Coupon - 7 Requests in the folder
+        </div>
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            Profile - 2 Requests in the folder
+        </div>
+        <div class="alert alert-dark text-uppercase text-center iteration-0">
+            Log out - 1 Request in the folder
+        </div>
+        </div>      
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</body>
+</html>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.2/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- Data Table Configuration -->
+
+<script>
+$(document).ready( function () {
+    $('#myTable-62779782-69b7-4469-9d20-8015943e8296').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-593c9379-57fb-444e-9915-41b6aa21ce86').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-fe70f1a8-d265-4a3f-b2b4-f65e6cc0e839').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-674cffbd-242d-41b5-bd04-94e2cb1828a9').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-aab0711d-0727-402d-b553-70b7a8b92aa1').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-0c32cada-ec3c-4108-afe6-70003c76813b').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-d3d41ee4-2be3-4b52-b47c-4f17af737b1a').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-d9034c9d-5d24-4afe-85ab-381fe5a118a7').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-cb07cbfe-c767-484c-8248-7752a566dd09').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-de356fca-37c6-4af5-8f45-1a7ab2eb98ee').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-0cf0e65f-8b01-4aed-9521-ae256ce7c235').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-c3e6b0a3-4b72-4d96-ba5f-c649cbf432ba').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-7374060d-0cae-4b66-818c-7f99dba8a6ff').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-523c155c-8174-4d2d-b6a5-56d044cbf2df').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-cc3bb85f-c7c2-42cd-b2d9-15dc211c4a3d').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-f7bcd6e6-8290-47cc-850b-70c20d2b484a').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-169e308e-a9ef-4f6b-879b-a3476e0de082').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-ca5d9f76-0507-4643-9faa-829474fd5ee2').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-f8596aa2-3ae7-427d-a0bb-b5a0522a1e3a').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-5e6fa7fb-70ff-45fb-a56e-77ff655de499').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-7e4eb140-fd77-4880-893e-51b6c2a58876').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-8075b845-9646-42dd-b870-d4fe20498dd4').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-0f61619f-4550-4803-ae23-4885f3c15e00').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-f3a98dfb-5153-418c-b189-5f2d343df0a2').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-59bdf757-03be-4731-82bf-4edf3e4e9b0d').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-9f7afbfe-adfe-4422-9add-5943e2c7ade7').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-a5c6ee14-a5a2-408e-9e59-4b73d1acb7ec').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-f87a9af7-5369-4e99-b5f3-09c7280de7a2').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-f36c1da9-a641-4c89-98e0-fb8128b0c099').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-974e55d3-cd77-438b-843b-410f285d74eb').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-03c371d2-4184-4517-906a-24514721689f').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-54b4d6a6-da67-43f1-bce1-cb0ad2b33f80').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-9a84ccc3-23a0-4463-a9c6-1525f534a027').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-7df5c928-5a24-4445-924f-eb7e0a0192bb').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-520a4856-3596-440c-a2d0-8a9fb26fecbe').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-eeb2bc1a-7b3e-49ca-be4f-78f774b71cb6').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-aee1600b-8122-46a6-aac5-508d1016619f').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-ce36c909-19f5-48a8-8b53-0d2c2ef0b2c4').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-8093e2a1-b6e3-49c9-b336-6d107b26e9b9').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-660efb66-f703-4ebf-a6f4-fe8f5bc8a00a').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-3dfae358-5b99-4367-8bef-7934d68a34d4').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-eccdd846-5c84-4ed1-b7ba-0d82c56d113e').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+$(document).ready( function () {
+    $('#myTable-4415f8a5-0504-4803-9561-b61d207ce88a').DataTable({
+        "retrieve": true,
+        "paging": false,
+        "info": false
+    });
+});
+</script>
+
+<!-- Tooltip Configuration -->
+
+<script>
+$(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip({
+        trigger : 'hover'
+    })
+})
+</script>
+
+<!-- Pretty Print the Response Body-->
+
+<script>
+function isJSON(data)
+{
+    var ret = true;
+    try {
+            JSON.parse(data);
+    }catch(e) {
+            ret = false;
+    }
+    return ret;
+}
+
+function isXML(data)
+{
+    return (data.length > 0 && data[0] === '<');
+}
+
+// see https://gist.github.com/sente/1083506/d2834134cd070dbcc08bf42ee27dabb746a1c54d#gistcomment-2254622
+function formatXML(data) {
+    const PADDING = ' '.repeat(2); // set desired indent size here
+    const reg = /(>)(<)(\/*)/g;
+    let pad = 0;
+    xml = data.replace(reg, '$1\r\n$2$3');
+
+    return xml.split('\r\n').map((node, index) => {
+        let indent = 0;
+        if (node.match(/.+<\/\w[^>]*>$/)) {
+            indent = 0;
+        } else if (node.match(/^<\/\w/) && pad > 0) {
+            pad -= 1;
+        } else if (node.match(/^<\w[^>]*[^\/]>.*$/)) {
+            indent = 1;
+        } else {
+            indent = 0;
+        }
+
+        pad += indent;
+        return PADDING.repeat(pad - indent) + node;
+    }).join('\r\n');
+}
+
+$(".prettyPrint").each(function () {
+        var data = $(this).text();
+        // Verify whether data is JSON
+        if(isJSON(data))
+        {
+                obj = JSON.parse(data);
+                data = JSON.stringify(obj, null, 2);
+        }
+        else if(isXML(data)) {
+            data = formatXML(data);            
+        }
+        $(this).text(data);
+});
+</script>
+
+
+<!-- Copy Response Body To Clipboard -->
+
+<script>
+    var clipboard = new ClipboardJS('.copyButton');
+    
+    clipboard.on('success', function(e) {        
+        e.clearSelection();
+        $(".copyButton").addClass("bg-success text-white")
+        e.trigger.textContent = '✔ Copied!';
+        window.setTimeout(function() {
+            $(".copyButton").removeClass("bg-success text-white")
+            e.trigger.textContent = 'Copy to Clipboard';
+        }, 2000);
+    });
+    clipboard.on('error', function(e) {
+        e.clearSelection();
+        $(".copyButton").addClass("bg-danger text-white")
+        e.trigger.textContent = '✗ Not Copied';
+        window.setTimeout(function() {
+            $(".copyButton").removeClass("bg-danger text-white")
+            e.trigger.textContent = 'Copy to Clipboard';
+        }, 2000);
+    });
+
+</script>
+
+<!-- Render the Description Markdown and link in the test failures -->
+
+<script>
+    const remarkable = new Remarkable();
+    
+    const descriptions = document.querySelectorAll(".renderMarkdown");
+    descriptions.forEach(description => {
+        description.innerHTML = renderHtmlFromMarkdown(description.textContent);
+    });
+    function renderHtmlFromMarkdown(markdown) {
+        return remarkable.render(trim(markdown));
+    }
+    function trim(string) {
+        return string ? string.replace(/^ +| +$/gm, "") : string;
+    }
+</script>
+
+<!-- Show/Hide The Requests -->
+
+<script>
+$('#openAllRequests').on('click', function(e) {
+let clickCount = $(this).data("clickCount") || 1
+switch (clickCount){
+    case 1:
+            $('#requests-4550995f-4d60-4efc-abf5-da6a00d7b19b').removeClass('collapsed')
+            $('#collapse-4550995f-4d60-4efc-abf5-da6a00d7b19b').removeClass('collapsed')
+            $('#requests-4550995f-4d60-4efc-abf5-da6a00d7b19b').addClass('show')
+            $('#collapse-4550995f-4d60-4efc-abf5-da6a00d7b19b').addClass('show')
+            $('#requests-9c3196dc-3703-477c-8004-3ed261e1bc55').removeClass('collapsed')
+            $('#collapse-9c3196dc-3703-477c-8004-3ed261e1bc55').removeClass('collapsed')
+            $('#requests-9c3196dc-3703-477c-8004-3ed261e1bc55').addClass('show')
+            $('#collapse-9c3196dc-3703-477c-8004-3ed261e1bc55').addClass('show')
+            $('#requests-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').removeClass('collapsed')
+            $('#collapse-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').removeClass('collapsed')
+            $('#requests-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').addClass('show')
+            $('#collapse-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').addClass('show')
+            $('#requests-b4263a4f-7019-4aae-827e-4a919303242d').removeClass('collapsed')
+            $('#collapse-b4263a4f-7019-4aae-827e-4a919303242d').removeClass('collapsed')
+            $('#requests-b4263a4f-7019-4aae-827e-4a919303242d').addClass('show')
+            $('#collapse-b4263a4f-7019-4aae-827e-4a919303242d').addClass('show')
+            $('#requests-a4cc6f34-510e-469f-bdc9-85ed52ee7281').removeClass('collapsed')
+            $('#collapse-a4cc6f34-510e-469f-bdc9-85ed52ee7281').removeClass('collapsed')
+            $('#requests-a4cc6f34-510e-469f-bdc9-85ed52ee7281').addClass('show')
+            $('#collapse-a4cc6f34-510e-469f-bdc9-85ed52ee7281').addClass('show')
+            $('#requests-f12a85ac-afc9-4702-9274-6d090118985e').removeClass('collapsed')
+            $('#collapse-f12a85ac-afc9-4702-9274-6d090118985e').removeClass('collapsed')
+            $('#requests-f12a85ac-afc9-4702-9274-6d090118985e').addClass('show')
+            $('#collapse-f12a85ac-afc9-4702-9274-6d090118985e').addClass('show')
+            $('#requests-6179af8c-7ecd-4261-a1f0-fe09a6d48643').removeClass('collapsed')
+            $('#collapse-6179af8c-7ecd-4261-a1f0-fe09a6d48643').removeClass('collapsed')
+            $('#requests-6179af8c-7ecd-4261-a1f0-fe09a6d48643').addClass('show')
+            $('#collapse-6179af8c-7ecd-4261-a1f0-fe09a6d48643').addClass('show')
+            $('#requests-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').removeClass('collapsed')
+            $('#collapse-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').removeClass('collapsed')
+            $('#requests-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').addClass('show')
+            $('#collapse-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').addClass('show')
+            $('#requests-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').removeClass('collapsed')
+            $('#collapse-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').removeClass('collapsed')
+            $('#requests-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').addClass('show')
+            $('#collapse-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').addClass('show')
+            $('#requests-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').removeClass('collapsed')
+            $('#collapse-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').removeClass('collapsed')
+            $('#requests-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').addClass('show')
+            $('#collapse-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').addClass('show')
+            $('#requests-7f5894bb-7c91-41d9-965b-06eba031eed5').removeClass('collapsed')
+            $('#collapse-7f5894bb-7c91-41d9-965b-06eba031eed5').removeClass('collapsed')
+            $('#requests-7f5894bb-7c91-41d9-965b-06eba031eed5').addClass('show')
+            $('#collapse-7f5894bb-7c91-41d9-965b-06eba031eed5').addClass('show')
+            $('#requests-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').removeClass('collapsed')
+            $('#collapse-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').removeClass('collapsed')
+            $('#requests-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').addClass('show')
+            $('#collapse-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').addClass('show')
+            $('#requests-ae550a29-1e53-4e41-8880-a4441afe87bd').removeClass('collapsed')
+            $('#collapse-ae550a29-1e53-4e41-8880-a4441afe87bd').removeClass('collapsed')
+            $('#requests-ae550a29-1e53-4e41-8880-a4441afe87bd').addClass('show')
+            $('#collapse-ae550a29-1e53-4e41-8880-a4441afe87bd').addClass('show')
+            $('#requests-1090b545-2b13-47a5-a364-7a185ff1e49c').removeClass('collapsed')
+            $('#collapse-1090b545-2b13-47a5-a364-7a185ff1e49c').removeClass('collapsed')
+            $('#requests-1090b545-2b13-47a5-a364-7a185ff1e49c').addClass('show')
+            $('#collapse-1090b545-2b13-47a5-a364-7a185ff1e49c').addClass('show')
+            $('#requests-5f00c4f5-d6b5-4c35-987f-4d453ff95916').removeClass('collapsed')
+            $('#collapse-5f00c4f5-d6b5-4c35-987f-4d453ff95916').removeClass('collapsed')
+            $('#requests-5f00c4f5-d6b5-4c35-987f-4d453ff95916').addClass('show')
+            $('#collapse-5f00c4f5-d6b5-4c35-987f-4d453ff95916').addClass('show')
+            $('#requests-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').removeClass('collapsed')
+            $('#collapse-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').removeClass('collapsed')
+            $('#requests-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').addClass('show')
+            $('#collapse-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').addClass('show')
+            $('#requests-3fba1f2c-e1bc-475d-8660-c533bb245fd0').removeClass('collapsed')
+            $('#collapse-3fba1f2c-e1bc-475d-8660-c533bb245fd0').removeClass('collapsed')
+            $('#requests-3fba1f2c-e1bc-475d-8660-c533bb245fd0').addClass('show')
+            $('#collapse-3fba1f2c-e1bc-475d-8660-c533bb245fd0').addClass('show')
+            $('#requests-6280bdff-b212-47b2-a6aa-f770aea750bd').removeClass('collapsed')
+            $('#collapse-6280bdff-b212-47b2-a6aa-f770aea750bd').removeClass('collapsed')
+            $('#requests-6280bdff-b212-47b2-a6aa-f770aea750bd').addClass('show')
+            $('#collapse-6280bdff-b212-47b2-a6aa-f770aea750bd').addClass('show')
+            $('#requests-b748f403-5033-4ed0-8324-d81c7043e350').removeClass('collapsed')
+            $('#collapse-b748f403-5033-4ed0-8324-d81c7043e350').removeClass('collapsed')
+            $('#requests-b748f403-5033-4ed0-8324-d81c7043e350').addClass('show')
+            $('#collapse-b748f403-5033-4ed0-8324-d81c7043e350').addClass('show')
+            $('#requests-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').removeClass('collapsed')
+            $('#collapse-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').removeClass('collapsed')
+            $('#requests-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').addClass('show')
+            $('#collapse-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').addClass('show')
+            $('#requests-516b3b34-0158-4fa5-8780-d5143d03142c').removeClass('collapsed')
+            $('#collapse-516b3b34-0158-4fa5-8780-d5143d03142c').removeClass('collapsed')
+            $('#requests-516b3b34-0158-4fa5-8780-d5143d03142c').addClass('show')
+            $('#collapse-516b3b34-0158-4fa5-8780-d5143d03142c').addClass('show')
+            $('#requests-1437c78e-ff6a-4b72-9636-8e223f5ab567').removeClass('collapsed')
+            $('#collapse-1437c78e-ff6a-4b72-9636-8e223f5ab567').removeClass('collapsed')
+            $('#requests-1437c78e-ff6a-4b72-9636-8e223f5ab567').addClass('show')
+            $('#collapse-1437c78e-ff6a-4b72-9636-8e223f5ab567').addClass('show')
+            $('#requests-44a53a07-54bf-4170-9992-fe9b98ad999f').removeClass('collapsed')
+            $('#collapse-44a53a07-54bf-4170-9992-fe9b98ad999f').removeClass('collapsed')
+            $('#requests-44a53a07-54bf-4170-9992-fe9b98ad999f').addClass('show')
+            $('#collapse-44a53a07-54bf-4170-9992-fe9b98ad999f').addClass('show')
+            $('#requests-467af38e-923f-468b-8990-9320cb8b7115').removeClass('collapsed')
+            $('#collapse-467af38e-923f-468b-8990-9320cb8b7115').removeClass('collapsed')
+            $('#requests-467af38e-923f-468b-8990-9320cb8b7115').addClass('show')
+            $('#collapse-467af38e-923f-468b-8990-9320cb8b7115').addClass('show')
+            $('#requests-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').removeClass('collapsed')
+            $('#collapse-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').removeClass('collapsed')
+            $('#requests-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').addClass('show')
+            $('#collapse-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').addClass('show')
+            $('#requests-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').removeClass('collapsed')
+            $('#collapse-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').removeClass('collapsed')
+            $('#requests-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').addClass('show')
+            $('#collapse-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').addClass('show')
+            $('#requests-dcb494a4-6aff-419f-aeb4-9c343b0944bf').removeClass('collapsed')
+            $('#collapse-dcb494a4-6aff-419f-aeb4-9c343b0944bf').removeClass('collapsed')
+            $('#requests-dcb494a4-6aff-419f-aeb4-9c343b0944bf').addClass('show')
+            $('#collapse-dcb494a4-6aff-419f-aeb4-9c343b0944bf').addClass('show')
+            $('#requests-83666a8c-60af-4961-9b88-a44de273529a').removeClass('collapsed')
+            $('#collapse-83666a8c-60af-4961-9b88-a44de273529a').removeClass('collapsed')
+            $('#requests-83666a8c-60af-4961-9b88-a44de273529a').addClass('show')
+            $('#collapse-83666a8c-60af-4961-9b88-a44de273529a').addClass('show')
+            $('#requests-37129e46-37f8-4d09-8864-00fc7d3e5380').removeClass('collapsed')
+            $('#collapse-37129e46-37f8-4d09-8864-00fc7d3e5380').removeClass('collapsed')
+            $('#requests-37129e46-37f8-4d09-8864-00fc7d3e5380').addClass('show')
+            $('#collapse-37129e46-37f8-4d09-8864-00fc7d3e5380').addClass('show')
+            $('#requests-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').removeClass('collapsed')
+            $('#collapse-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').removeClass('collapsed')
+            $('#requests-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').addClass('show')
+            $('#collapse-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').addClass('show')
+            $('#requests-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').removeClass('collapsed')
+            $('#collapse-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').removeClass('collapsed')
+            $('#requests-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').addClass('show')
+            $('#collapse-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').addClass('show')
+            $('#requests-65f209b9-beac-4405-850c-92e7b0d02cbd').removeClass('collapsed')
+            $('#collapse-65f209b9-beac-4405-850c-92e7b0d02cbd').removeClass('collapsed')
+            $('#requests-65f209b9-beac-4405-850c-92e7b0d02cbd').addClass('show')
+            $('#collapse-65f209b9-beac-4405-850c-92e7b0d02cbd').addClass('show')
+            $('#requests-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').removeClass('collapsed')
+            $('#collapse-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').removeClass('collapsed')
+            $('#requests-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').addClass('show')
+            $('#collapse-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').addClass('show')
+            $('#requests-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').removeClass('collapsed')
+            $('#collapse-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').removeClass('collapsed')
+            $('#requests-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').addClass('show')
+            $('#collapse-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').addClass('show')
+            $('#requests-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').removeClass('collapsed')
+            $('#collapse-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').removeClass('collapsed')
+            $('#requests-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').addClass('show')
+            $('#collapse-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').addClass('show')
+            $('#requests-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').removeClass('collapsed')
+            $('#collapse-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').removeClass('collapsed')
+            $('#requests-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').addClass('show')
+            $('#collapse-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').addClass('show')
+            $('#requests-9203669f-8d61-4708-98f7-8fbd076219fd').removeClass('collapsed')
+            $('#collapse-9203669f-8d61-4708-98f7-8fbd076219fd').removeClass('collapsed')
+            $('#requests-9203669f-8d61-4708-98f7-8fbd076219fd').addClass('show')
+            $('#collapse-9203669f-8d61-4708-98f7-8fbd076219fd').addClass('show')
+            $('#requests-e5a7763b-80a1-4654-9a20-f15486b80e39').removeClass('collapsed')
+            $('#collapse-e5a7763b-80a1-4654-9a20-f15486b80e39').removeClass('collapsed')
+            $('#requests-e5a7763b-80a1-4654-9a20-f15486b80e39').addClass('show')
+            $('#collapse-e5a7763b-80a1-4654-9a20-f15486b80e39').addClass('show')
+            $('#requests-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').removeClass('collapsed')
+            $('#collapse-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').removeClass('collapsed')
+            $('#requests-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').addClass('show')
+            $('#collapse-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').addClass('show')
+            $('#requests-27612e99-3a5f-4b36-a433-755a46d087cf').removeClass('collapsed')
+            $('#collapse-27612e99-3a5f-4b36-a433-755a46d087cf').removeClass('collapsed')
+            $('#requests-27612e99-3a5f-4b36-a433-755a46d087cf').addClass('show')
+            $('#collapse-27612e99-3a5f-4b36-a433-755a46d087cf').addClass('show')
+            $('#requests-06849464-3d6f-43c5-9269-0c4973fc0bed').removeClass('collapsed')
+            $('#collapse-06849464-3d6f-43c5-9269-0c4973fc0bed').removeClass('collapsed')
+            $('#requests-06849464-3d6f-43c5-9269-0c4973fc0bed').addClass('show')
+            $('#collapse-06849464-3d6f-43c5-9269-0c4973fc0bed').addClass('show')
+            $('#requests-c1b371ac-e893-4fc7-9a80-222e8907d392').removeClass('collapsed')
+            $('#collapse-c1b371ac-e893-4fc7-9a80-222e8907d392').removeClass('collapsed')
+            $('#requests-c1b371ac-e893-4fc7-9a80-222e8907d392').addClass('show')
+            $('#collapse-c1b371ac-e893-4fc7-9a80-222e8907d392').addClass('show')
+            $('#requests-baa11a2e-b4d9-41a3-bbe9-6c84df986148').removeClass('collapsed')
+            $('#collapse-baa11a2e-b4d9-41a3-bbe9-6c84df986148').removeClass('collapsed')
+            $('#requests-baa11a2e-b4d9-41a3-bbe9-6c84df986148').addClass('show')
+            $('#collapse-baa11a2e-b4d9-41a3-bbe9-6c84df986148').addClass('show')
+        $('#openAllRequests').html("Collapse Requests");
+        break;
+    case 2:
+            $('#requests-4550995f-4d60-4efc-abf5-da6a00d7b19b').addClass('collapsed')
+            $('#collapse-4550995f-4d60-4efc-abf5-da6a00d7b19b').addClass('collapsed')
+            $('#requests-4550995f-4d60-4efc-abf5-da6a00d7b19b').removeClass('show')
+            $('#collapse-4550995f-4d60-4efc-abf5-da6a00d7b19b').removeClass('show')
+            $('#requests-9c3196dc-3703-477c-8004-3ed261e1bc55').addClass('collapsed')
+            $('#collapse-9c3196dc-3703-477c-8004-3ed261e1bc55').addClass('collapsed')
+            $('#requests-9c3196dc-3703-477c-8004-3ed261e1bc55').removeClass('show')
+            $('#collapse-9c3196dc-3703-477c-8004-3ed261e1bc55').removeClass('show')
+            $('#requests-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').addClass('collapsed')
+            $('#collapse-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').addClass('collapsed')
+            $('#requests-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').removeClass('show')
+            $('#collapse-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').removeClass('show')
+            $('#requests-b4263a4f-7019-4aae-827e-4a919303242d').addClass('collapsed')
+            $('#collapse-b4263a4f-7019-4aae-827e-4a919303242d').addClass('collapsed')
+            $('#requests-b4263a4f-7019-4aae-827e-4a919303242d').removeClass('show')
+            $('#collapse-b4263a4f-7019-4aae-827e-4a919303242d').removeClass('show')
+            $('#requests-a4cc6f34-510e-469f-bdc9-85ed52ee7281').addClass('collapsed')
+            $('#collapse-a4cc6f34-510e-469f-bdc9-85ed52ee7281').addClass('collapsed')
+            $('#requests-a4cc6f34-510e-469f-bdc9-85ed52ee7281').removeClass('show')
+            $('#collapse-a4cc6f34-510e-469f-bdc9-85ed52ee7281').removeClass('show')
+            $('#requests-f12a85ac-afc9-4702-9274-6d090118985e').addClass('collapsed')
+            $('#collapse-f12a85ac-afc9-4702-9274-6d090118985e').addClass('collapsed')
+            $('#requests-f12a85ac-afc9-4702-9274-6d090118985e').removeClass('show')
+            $('#collapse-f12a85ac-afc9-4702-9274-6d090118985e').removeClass('show')
+            $('#requests-6179af8c-7ecd-4261-a1f0-fe09a6d48643').addClass('collapsed')
+            $('#collapse-6179af8c-7ecd-4261-a1f0-fe09a6d48643').addClass('collapsed')
+            $('#requests-6179af8c-7ecd-4261-a1f0-fe09a6d48643').removeClass('show')
+            $('#collapse-6179af8c-7ecd-4261-a1f0-fe09a6d48643').removeClass('show')
+            $('#requests-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').addClass('collapsed')
+            $('#collapse-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').addClass('collapsed')
+            $('#requests-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').removeClass('show')
+            $('#collapse-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').removeClass('show')
+            $('#requests-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').addClass('collapsed')
+            $('#collapse-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').addClass('collapsed')
+            $('#requests-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').removeClass('show')
+            $('#collapse-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').removeClass('show')
+            $('#requests-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').addClass('collapsed')
+            $('#collapse-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').addClass('collapsed')
+            $('#requests-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').removeClass('show')
+            $('#collapse-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').removeClass('show')
+            $('#requests-7f5894bb-7c91-41d9-965b-06eba031eed5').addClass('collapsed')
+            $('#collapse-7f5894bb-7c91-41d9-965b-06eba031eed5').addClass('collapsed')
+            $('#requests-7f5894bb-7c91-41d9-965b-06eba031eed5').removeClass('show')
+            $('#collapse-7f5894bb-7c91-41d9-965b-06eba031eed5').removeClass('show')
+            $('#requests-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').addClass('collapsed')
+            $('#collapse-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').addClass('collapsed')
+            $('#requests-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').removeClass('show')
+            $('#collapse-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').removeClass('show')
+            $('#requests-ae550a29-1e53-4e41-8880-a4441afe87bd').addClass('collapsed')
+            $('#collapse-ae550a29-1e53-4e41-8880-a4441afe87bd').addClass('collapsed')
+            $('#requests-ae550a29-1e53-4e41-8880-a4441afe87bd').removeClass('show')
+            $('#collapse-ae550a29-1e53-4e41-8880-a4441afe87bd').removeClass('show')
+            $('#requests-1090b545-2b13-47a5-a364-7a185ff1e49c').addClass('collapsed')
+            $('#collapse-1090b545-2b13-47a5-a364-7a185ff1e49c').addClass('collapsed')
+            $('#requests-1090b545-2b13-47a5-a364-7a185ff1e49c').removeClass('show')
+            $('#collapse-1090b545-2b13-47a5-a364-7a185ff1e49c').removeClass('show')
+            $('#requests-5f00c4f5-d6b5-4c35-987f-4d453ff95916').addClass('collapsed')
+            $('#collapse-5f00c4f5-d6b5-4c35-987f-4d453ff95916').addClass('collapsed')
+            $('#requests-5f00c4f5-d6b5-4c35-987f-4d453ff95916').removeClass('show')
+            $('#collapse-5f00c4f5-d6b5-4c35-987f-4d453ff95916').removeClass('show')
+            $('#requests-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').addClass('collapsed')
+            $('#collapse-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').addClass('collapsed')
+            $('#requests-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').removeClass('show')
+            $('#collapse-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').removeClass('show')
+            $('#requests-3fba1f2c-e1bc-475d-8660-c533bb245fd0').addClass('collapsed')
+            $('#collapse-3fba1f2c-e1bc-475d-8660-c533bb245fd0').addClass('collapsed')
+            $('#requests-3fba1f2c-e1bc-475d-8660-c533bb245fd0').removeClass('show')
+            $('#collapse-3fba1f2c-e1bc-475d-8660-c533bb245fd0').removeClass('show')
+            $('#requests-6280bdff-b212-47b2-a6aa-f770aea750bd').addClass('collapsed')
+            $('#collapse-6280bdff-b212-47b2-a6aa-f770aea750bd').addClass('collapsed')
+            $('#requests-6280bdff-b212-47b2-a6aa-f770aea750bd').removeClass('show')
+            $('#collapse-6280bdff-b212-47b2-a6aa-f770aea750bd').removeClass('show')
+            $('#requests-b748f403-5033-4ed0-8324-d81c7043e350').addClass('collapsed')
+            $('#collapse-b748f403-5033-4ed0-8324-d81c7043e350').addClass('collapsed')
+            $('#requests-b748f403-5033-4ed0-8324-d81c7043e350').removeClass('show')
+            $('#collapse-b748f403-5033-4ed0-8324-d81c7043e350').removeClass('show')
+            $('#requests-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').addClass('collapsed')
+            $('#collapse-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').addClass('collapsed')
+            $('#requests-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').removeClass('show')
+            $('#collapse-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').removeClass('show')
+            $('#requests-516b3b34-0158-4fa5-8780-d5143d03142c').addClass('collapsed')
+            $('#collapse-516b3b34-0158-4fa5-8780-d5143d03142c').addClass('collapsed')
+            $('#requests-516b3b34-0158-4fa5-8780-d5143d03142c').removeClass('show')
+            $('#collapse-516b3b34-0158-4fa5-8780-d5143d03142c').removeClass('show')
+            $('#requests-1437c78e-ff6a-4b72-9636-8e223f5ab567').addClass('collapsed')
+            $('#collapse-1437c78e-ff6a-4b72-9636-8e223f5ab567').addClass('collapsed')
+            $('#requests-1437c78e-ff6a-4b72-9636-8e223f5ab567').removeClass('show')
+            $('#collapse-1437c78e-ff6a-4b72-9636-8e223f5ab567').removeClass('show')
+            $('#requests-44a53a07-54bf-4170-9992-fe9b98ad999f').addClass('collapsed')
+            $('#collapse-44a53a07-54bf-4170-9992-fe9b98ad999f').addClass('collapsed')
+            $('#requests-44a53a07-54bf-4170-9992-fe9b98ad999f').removeClass('show')
+            $('#collapse-44a53a07-54bf-4170-9992-fe9b98ad999f').removeClass('show')
+            $('#requests-467af38e-923f-468b-8990-9320cb8b7115').addClass('collapsed')
+            $('#collapse-467af38e-923f-468b-8990-9320cb8b7115').addClass('collapsed')
+            $('#requests-467af38e-923f-468b-8990-9320cb8b7115').removeClass('show')
+            $('#collapse-467af38e-923f-468b-8990-9320cb8b7115').removeClass('show')
+            $('#requests-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').addClass('collapsed')
+            $('#collapse-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').addClass('collapsed')
+            $('#requests-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').removeClass('show')
+            $('#collapse-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').removeClass('show')
+            $('#requests-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').addClass('collapsed')
+            $('#collapse-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').addClass('collapsed')
+            $('#requests-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').removeClass('show')
+            $('#collapse-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').removeClass('show')
+            $('#requests-dcb494a4-6aff-419f-aeb4-9c343b0944bf').addClass('collapsed')
+            $('#collapse-dcb494a4-6aff-419f-aeb4-9c343b0944bf').addClass('collapsed')
+            $('#requests-dcb494a4-6aff-419f-aeb4-9c343b0944bf').removeClass('show')
+            $('#collapse-dcb494a4-6aff-419f-aeb4-9c343b0944bf').removeClass('show')
+            $('#requests-83666a8c-60af-4961-9b88-a44de273529a').addClass('collapsed')
+            $('#collapse-83666a8c-60af-4961-9b88-a44de273529a').addClass('collapsed')
+            $('#requests-83666a8c-60af-4961-9b88-a44de273529a').removeClass('show')
+            $('#collapse-83666a8c-60af-4961-9b88-a44de273529a').removeClass('show')
+            $('#requests-37129e46-37f8-4d09-8864-00fc7d3e5380').addClass('collapsed')
+            $('#collapse-37129e46-37f8-4d09-8864-00fc7d3e5380').addClass('collapsed')
+            $('#requests-37129e46-37f8-4d09-8864-00fc7d3e5380').removeClass('show')
+            $('#collapse-37129e46-37f8-4d09-8864-00fc7d3e5380').removeClass('show')
+            $('#requests-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').addClass('collapsed')
+            $('#collapse-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').addClass('collapsed')
+            $('#requests-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').removeClass('show')
+            $('#collapse-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').removeClass('show')
+            $('#requests-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').addClass('collapsed')
+            $('#collapse-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').addClass('collapsed')
+            $('#requests-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').removeClass('show')
+            $('#collapse-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').removeClass('show')
+            $('#requests-65f209b9-beac-4405-850c-92e7b0d02cbd').addClass('collapsed')
+            $('#collapse-65f209b9-beac-4405-850c-92e7b0d02cbd').addClass('collapsed')
+            $('#requests-65f209b9-beac-4405-850c-92e7b0d02cbd').removeClass('show')
+            $('#collapse-65f209b9-beac-4405-850c-92e7b0d02cbd').removeClass('show')
+            $('#requests-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').addClass('collapsed')
+            $('#collapse-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').addClass('collapsed')
+            $('#requests-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').removeClass('show')
+            $('#collapse-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').removeClass('show')
+            $('#requests-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').addClass('collapsed')
+            $('#collapse-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').addClass('collapsed')
+            $('#requests-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').removeClass('show')
+            $('#collapse-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').removeClass('show')
+            $('#requests-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').addClass('collapsed')
+            $('#collapse-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').addClass('collapsed')
+            $('#requests-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').removeClass('show')
+            $('#collapse-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').removeClass('show')
+            $('#requests-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').addClass('collapsed')
+            $('#collapse-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').addClass('collapsed')
+            $('#requests-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').removeClass('show')
+            $('#collapse-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').removeClass('show')
+            $('#requests-9203669f-8d61-4708-98f7-8fbd076219fd').addClass('collapsed')
+            $('#collapse-9203669f-8d61-4708-98f7-8fbd076219fd').addClass('collapsed')
+            $('#requests-9203669f-8d61-4708-98f7-8fbd076219fd').removeClass('show')
+            $('#collapse-9203669f-8d61-4708-98f7-8fbd076219fd').removeClass('show')
+            $('#requests-e5a7763b-80a1-4654-9a20-f15486b80e39').addClass('collapsed')
+            $('#collapse-e5a7763b-80a1-4654-9a20-f15486b80e39').addClass('collapsed')
+            $('#requests-e5a7763b-80a1-4654-9a20-f15486b80e39').removeClass('show')
+            $('#collapse-e5a7763b-80a1-4654-9a20-f15486b80e39').removeClass('show')
+            $('#requests-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').addClass('collapsed')
+            $('#collapse-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').addClass('collapsed')
+            $('#requests-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').removeClass('show')
+            $('#collapse-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').removeClass('show')
+            $('#requests-27612e99-3a5f-4b36-a433-755a46d087cf').addClass('collapsed')
+            $('#collapse-27612e99-3a5f-4b36-a433-755a46d087cf').addClass('collapsed')
+            $('#requests-27612e99-3a5f-4b36-a433-755a46d087cf').removeClass('show')
+            $('#collapse-27612e99-3a5f-4b36-a433-755a46d087cf').removeClass('show')
+            $('#requests-06849464-3d6f-43c5-9269-0c4973fc0bed').addClass('collapsed')
+            $('#collapse-06849464-3d6f-43c5-9269-0c4973fc0bed').addClass('collapsed')
+            $('#requests-06849464-3d6f-43c5-9269-0c4973fc0bed').removeClass('show')
+            $('#collapse-06849464-3d6f-43c5-9269-0c4973fc0bed').removeClass('show')
+            $('#requests-c1b371ac-e893-4fc7-9a80-222e8907d392').addClass('collapsed')
+            $('#collapse-c1b371ac-e893-4fc7-9a80-222e8907d392').addClass('collapsed')
+            $('#requests-c1b371ac-e893-4fc7-9a80-222e8907d392').removeClass('show')
+            $('#collapse-c1b371ac-e893-4fc7-9a80-222e8907d392').removeClass('show')
+            $('#requests-baa11a2e-b4d9-41a3-bbe9-6c84df986148').addClass('collapsed')
+            $('#collapse-baa11a2e-b4d9-41a3-bbe9-6c84df986148').addClass('collapsed')
+            $('#requests-baa11a2e-b4d9-41a3-bbe9-6c84df986148').removeClass('show')
+            $('#collapse-baa11a2e-b4d9-41a3-bbe9-6c84df986148').removeClass('show')
+        $('#openAllRequests').html("Expand Requests");
+        break;
+}
+clickCount = clickCount > 1 ? 1 : ++clickCount;
+$(this).data("clickCount", clickCount)
+})
+</script>
+
+<!-- Show/Hide The Skipped Tests -->
+
+<script>
+$('#openAllSkipped').on('click', function(e) {
+let clickCount = $(this).data("clickCount") || 1
+switch (clickCount){
+    case 1:
+            $('#skipped-4550995f-4d60-4efc-abf5-da6a00d7b19b').removeClass('collapsed')
+            $('#skipped-collapse-4550995f-4d60-4efc-abf5-da6a00d7b19b').removeClass('collapsed')
+            $('#skipped-4550995f-4d60-4efc-abf5-da6a00d7b19b').addClass('show')
+            $('#skipped-collapse-4550995f-4d60-4efc-abf5-da6a00d7b19b').addClass('show')
+            $('#skipped-9c3196dc-3703-477c-8004-3ed261e1bc55').removeClass('collapsed')
+            $('#skipped-collapse-9c3196dc-3703-477c-8004-3ed261e1bc55').removeClass('collapsed')
+            $('#skipped-9c3196dc-3703-477c-8004-3ed261e1bc55').addClass('show')
+            $('#skipped-collapse-9c3196dc-3703-477c-8004-3ed261e1bc55').addClass('show')
+            $('#skipped-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').removeClass('collapsed')
+            $('#skipped-collapse-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').removeClass('collapsed')
+            $('#skipped-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').addClass('show')
+            $('#skipped-collapse-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').addClass('show')
+            $('#skipped-b4263a4f-7019-4aae-827e-4a919303242d').removeClass('collapsed')
+            $('#skipped-collapse-b4263a4f-7019-4aae-827e-4a919303242d').removeClass('collapsed')
+            $('#skipped-b4263a4f-7019-4aae-827e-4a919303242d').addClass('show')
+            $('#skipped-collapse-b4263a4f-7019-4aae-827e-4a919303242d').addClass('show')
+            $('#skipped-a4cc6f34-510e-469f-bdc9-85ed52ee7281').removeClass('collapsed')
+            $('#skipped-collapse-a4cc6f34-510e-469f-bdc9-85ed52ee7281').removeClass('collapsed')
+            $('#skipped-a4cc6f34-510e-469f-bdc9-85ed52ee7281').addClass('show')
+            $('#skipped-collapse-a4cc6f34-510e-469f-bdc9-85ed52ee7281').addClass('show')
+            $('#skipped-f12a85ac-afc9-4702-9274-6d090118985e').removeClass('collapsed')
+            $('#skipped-collapse-f12a85ac-afc9-4702-9274-6d090118985e').removeClass('collapsed')
+            $('#skipped-f12a85ac-afc9-4702-9274-6d090118985e').addClass('show')
+            $('#skipped-collapse-f12a85ac-afc9-4702-9274-6d090118985e').addClass('show')
+            $('#skipped-6179af8c-7ecd-4261-a1f0-fe09a6d48643').removeClass('collapsed')
+            $('#skipped-collapse-6179af8c-7ecd-4261-a1f0-fe09a6d48643').removeClass('collapsed')
+            $('#skipped-6179af8c-7ecd-4261-a1f0-fe09a6d48643').addClass('show')
+            $('#skipped-collapse-6179af8c-7ecd-4261-a1f0-fe09a6d48643').addClass('show')
+            $('#skipped-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').removeClass('collapsed')
+            $('#skipped-collapse-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').removeClass('collapsed')
+            $('#skipped-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').addClass('show')
+            $('#skipped-collapse-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').addClass('show')
+            $('#skipped-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').removeClass('collapsed')
+            $('#skipped-collapse-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').removeClass('collapsed')
+            $('#skipped-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').addClass('show')
+            $('#skipped-collapse-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').addClass('show')
+            $('#skipped-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').removeClass('collapsed')
+            $('#skipped-collapse-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').removeClass('collapsed')
+            $('#skipped-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').addClass('show')
+            $('#skipped-collapse-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').addClass('show')
+            $('#skipped-7f5894bb-7c91-41d9-965b-06eba031eed5').removeClass('collapsed')
+            $('#skipped-collapse-7f5894bb-7c91-41d9-965b-06eba031eed5').removeClass('collapsed')
+            $('#skipped-7f5894bb-7c91-41d9-965b-06eba031eed5').addClass('show')
+            $('#skipped-collapse-7f5894bb-7c91-41d9-965b-06eba031eed5').addClass('show')
+            $('#skipped-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').removeClass('collapsed')
+            $('#skipped-collapse-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').removeClass('collapsed')
+            $('#skipped-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').addClass('show')
+            $('#skipped-collapse-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').addClass('show')
+            $('#skipped-ae550a29-1e53-4e41-8880-a4441afe87bd').removeClass('collapsed')
+            $('#skipped-collapse-ae550a29-1e53-4e41-8880-a4441afe87bd').removeClass('collapsed')
+            $('#skipped-ae550a29-1e53-4e41-8880-a4441afe87bd').addClass('show')
+            $('#skipped-collapse-ae550a29-1e53-4e41-8880-a4441afe87bd').addClass('show')
+            $('#skipped-1090b545-2b13-47a5-a364-7a185ff1e49c').removeClass('collapsed')
+            $('#skipped-collapse-1090b545-2b13-47a5-a364-7a185ff1e49c').removeClass('collapsed')
+            $('#skipped-1090b545-2b13-47a5-a364-7a185ff1e49c').addClass('show')
+            $('#skipped-collapse-1090b545-2b13-47a5-a364-7a185ff1e49c').addClass('show')
+            $('#skipped-5f00c4f5-d6b5-4c35-987f-4d453ff95916').removeClass('collapsed')
+            $('#skipped-collapse-5f00c4f5-d6b5-4c35-987f-4d453ff95916').removeClass('collapsed')
+            $('#skipped-5f00c4f5-d6b5-4c35-987f-4d453ff95916').addClass('show')
+            $('#skipped-collapse-5f00c4f5-d6b5-4c35-987f-4d453ff95916').addClass('show')
+            $('#skipped-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').removeClass('collapsed')
+            $('#skipped-collapse-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').removeClass('collapsed')
+            $('#skipped-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').addClass('show')
+            $('#skipped-collapse-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').addClass('show')
+            $('#skipped-3fba1f2c-e1bc-475d-8660-c533bb245fd0').removeClass('collapsed')
+            $('#skipped-collapse-3fba1f2c-e1bc-475d-8660-c533bb245fd0').removeClass('collapsed')
+            $('#skipped-3fba1f2c-e1bc-475d-8660-c533bb245fd0').addClass('show')
+            $('#skipped-collapse-3fba1f2c-e1bc-475d-8660-c533bb245fd0').addClass('show')
+            $('#skipped-6280bdff-b212-47b2-a6aa-f770aea750bd').removeClass('collapsed')
+            $('#skipped-collapse-6280bdff-b212-47b2-a6aa-f770aea750bd').removeClass('collapsed')
+            $('#skipped-6280bdff-b212-47b2-a6aa-f770aea750bd').addClass('show')
+            $('#skipped-collapse-6280bdff-b212-47b2-a6aa-f770aea750bd').addClass('show')
+            $('#skipped-b748f403-5033-4ed0-8324-d81c7043e350').removeClass('collapsed')
+            $('#skipped-collapse-b748f403-5033-4ed0-8324-d81c7043e350').removeClass('collapsed')
+            $('#skipped-b748f403-5033-4ed0-8324-d81c7043e350').addClass('show')
+            $('#skipped-collapse-b748f403-5033-4ed0-8324-d81c7043e350').addClass('show')
+            $('#skipped-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').removeClass('collapsed')
+            $('#skipped-collapse-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').removeClass('collapsed')
+            $('#skipped-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').addClass('show')
+            $('#skipped-collapse-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').addClass('show')
+            $('#skipped-516b3b34-0158-4fa5-8780-d5143d03142c').removeClass('collapsed')
+            $('#skipped-collapse-516b3b34-0158-4fa5-8780-d5143d03142c').removeClass('collapsed')
+            $('#skipped-516b3b34-0158-4fa5-8780-d5143d03142c').addClass('show')
+            $('#skipped-collapse-516b3b34-0158-4fa5-8780-d5143d03142c').addClass('show')
+            $('#skipped-1437c78e-ff6a-4b72-9636-8e223f5ab567').removeClass('collapsed')
+            $('#skipped-collapse-1437c78e-ff6a-4b72-9636-8e223f5ab567').removeClass('collapsed')
+            $('#skipped-1437c78e-ff6a-4b72-9636-8e223f5ab567').addClass('show')
+            $('#skipped-collapse-1437c78e-ff6a-4b72-9636-8e223f5ab567').addClass('show')
+            $('#skipped-44a53a07-54bf-4170-9992-fe9b98ad999f').removeClass('collapsed')
+            $('#skipped-collapse-44a53a07-54bf-4170-9992-fe9b98ad999f').removeClass('collapsed')
+            $('#skipped-44a53a07-54bf-4170-9992-fe9b98ad999f').addClass('show')
+            $('#skipped-collapse-44a53a07-54bf-4170-9992-fe9b98ad999f').addClass('show')
+            $('#skipped-467af38e-923f-468b-8990-9320cb8b7115').removeClass('collapsed')
+            $('#skipped-collapse-467af38e-923f-468b-8990-9320cb8b7115').removeClass('collapsed')
+            $('#skipped-467af38e-923f-468b-8990-9320cb8b7115').addClass('show')
+            $('#skipped-collapse-467af38e-923f-468b-8990-9320cb8b7115').addClass('show')
+            $('#skipped-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').removeClass('collapsed')
+            $('#skipped-collapse-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').removeClass('collapsed')
+            $('#skipped-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').addClass('show')
+            $('#skipped-collapse-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').addClass('show')
+            $('#skipped-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').removeClass('collapsed')
+            $('#skipped-collapse-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').removeClass('collapsed')
+            $('#skipped-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').addClass('show')
+            $('#skipped-collapse-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').addClass('show')
+            $('#skipped-dcb494a4-6aff-419f-aeb4-9c343b0944bf').removeClass('collapsed')
+            $('#skipped-collapse-dcb494a4-6aff-419f-aeb4-9c343b0944bf').removeClass('collapsed')
+            $('#skipped-dcb494a4-6aff-419f-aeb4-9c343b0944bf').addClass('show')
+            $('#skipped-collapse-dcb494a4-6aff-419f-aeb4-9c343b0944bf').addClass('show')
+            $('#skipped-83666a8c-60af-4961-9b88-a44de273529a').removeClass('collapsed')
+            $('#skipped-collapse-83666a8c-60af-4961-9b88-a44de273529a').removeClass('collapsed')
+            $('#skipped-83666a8c-60af-4961-9b88-a44de273529a').addClass('show')
+            $('#skipped-collapse-83666a8c-60af-4961-9b88-a44de273529a').addClass('show')
+            $('#skipped-37129e46-37f8-4d09-8864-00fc7d3e5380').removeClass('collapsed')
+            $('#skipped-collapse-37129e46-37f8-4d09-8864-00fc7d3e5380').removeClass('collapsed')
+            $('#skipped-37129e46-37f8-4d09-8864-00fc7d3e5380').addClass('show')
+            $('#skipped-collapse-37129e46-37f8-4d09-8864-00fc7d3e5380').addClass('show')
+            $('#skipped-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').removeClass('collapsed')
+            $('#skipped-collapse-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').removeClass('collapsed')
+            $('#skipped-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').addClass('show')
+            $('#skipped-collapse-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').addClass('show')
+            $('#skipped-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').removeClass('collapsed')
+            $('#skipped-collapse-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').removeClass('collapsed')
+            $('#skipped-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').addClass('show')
+            $('#skipped-collapse-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').addClass('show')
+            $('#skipped-65f209b9-beac-4405-850c-92e7b0d02cbd').removeClass('collapsed')
+            $('#skipped-collapse-65f209b9-beac-4405-850c-92e7b0d02cbd').removeClass('collapsed')
+            $('#skipped-65f209b9-beac-4405-850c-92e7b0d02cbd').addClass('show')
+            $('#skipped-collapse-65f209b9-beac-4405-850c-92e7b0d02cbd').addClass('show')
+            $('#skipped-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').removeClass('collapsed')
+            $('#skipped-collapse-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').removeClass('collapsed')
+            $('#skipped-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').addClass('show')
+            $('#skipped-collapse-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').addClass('show')
+            $('#skipped-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').removeClass('collapsed')
+            $('#skipped-collapse-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').removeClass('collapsed')
+            $('#skipped-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').addClass('show')
+            $('#skipped-collapse-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').addClass('show')
+            $('#skipped-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').removeClass('collapsed')
+            $('#skipped-collapse-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').removeClass('collapsed')
+            $('#skipped-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').addClass('show')
+            $('#skipped-collapse-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').addClass('show')
+            $('#skipped-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').removeClass('collapsed')
+            $('#skipped-collapse-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').removeClass('collapsed')
+            $('#skipped-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').addClass('show')
+            $('#skipped-collapse-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').addClass('show')
+            $('#skipped-9203669f-8d61-4708-98f7-8fbd076219fd').removeClass('collapsed')
+            $('#skipped-collapse-9203669f-8d61-4708-98f7-8fbd076219fd').removeClass('collapsed')
+            $('#skipped-9203669f-8d61-4708-98f7-8fbd076219fd').addClass('show')
+            $('#skipped-collapse-9203669f-8d61-4708-98f7-8fbd076219fd').addClass('show')
+            $('#skipped-e5a7763b-80a1-4654-9a20-f15486b80e39').removeClass('collapsed')
+            $('#skipped-collapse-e5a7763b-80a1-4654-9a20-f15486b80e39').removeClass('collapsed')
+            $('#skipped-e5a7763b-80a1-4654-9a20-f15486b80e39').addClass('show')
+            $('#skipped-collapse-e5a7763b-80a1-4654-9a20-f15486b80e39').addClass('show')
+            $('#skipped-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').removeClass('collapsed')
+            $('#skipped-collapse-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').removeClass('collapsed')
+            $('#skipped-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').addClass('show')
+            $('#skipped-collapse-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').addClass('show')
+            $('#skipped-27612e99-3a5f-4b36-a433-755a46d087cf').removeClass('collapsed')
+            $('#skipped-collapse-27612e99-3a5f-4b36-a433-755a46d087cf').removeClass('collapsed')
+            $('#skipped-27612e99-3a5f-4b36-a433-755a46d087cf').addClass('show')
+            $('#skipped-collapse-27612e99-3a5f-4b36-a433-755a46d087cf').addClass('show')
+            $('#skipped-06849464-3d6f-43c5-9269-0c4973fc0bed').removeClass('collapsed')
+            $('#skipped-collapse-06849464-3d6f-43c5-9269-0c4973fc0bed').removeClass('collapsed')
+            $('#skipped-06849464-3d6f-43c5-9269-0c4973fc0bed').addClass('show')
+            $('#skipped-collapse-06849464-3d6f-43c5-9269-0c4973fc0bed').addClass('show')
+            $('#skipped-c1b371ac-e893-4fc7-9a80-222e8907d392').removeClass('collapsed')
+            $('#skipped-collapse-c1b371ac-e893-4fc7-9a80-222e8907d392').removeClass('collapsed')
+            $('#skipped-c1b371ac-e893-4fc7-9a80-222e8907d392').addClass('show')
+            $('#skipped-collapse-c1b371ac-e893-4fc7-9a80-222e8907d392').addClass('show')
+            $('#skipped-baa11a2e-b4d9-41a3-bbe9-6c84df986148').removeClass('collapsed')
+            $('#skipped-collapse-baa11a2e-b4d9-41a3-bbe9-6c84df986148').removeClass('collapsed')
+            $('#skipped-baa11a2e-b4d9-41a3-bbe9-6c84df986148').addClass('show')
+            $('#skipped-collapse-baa11a2e-b4d9-41a3-bbe9-6c84df986148').addClass('show')
+        $('#openAllSkipped').html("Collapse All Skipped Tests");
+        break;
+    case 2:
+            $('#skipped-4550995f-4d60-4efc-abf5-da6a00d7b19b').addClass('collapsed')
+            $('#skipped-collapse-4550995f-4d60-4efc-abf5-da6a00d7b19b').addClass('collapsed')
+            $('#skipped-4550995f-4d60-4efc-abf5-da6a00d7b19b').removeClass('show')
+            $('#skipped-collapse-4550995f-4d60-4efc-abf5-da6a00d7b19b').removeClass('show')
+            $('#skipped-9c3196dc-3703-477c-8004-3ed261e1bc55').addClass('collapsed')
+            $('#skipped-collapse-9c3196dc-3703-477c-8004-3ed261e1bc55').addClass('collapsed')
+            $('#skipped-9c3196dc-3703-477c-8004-3ed261e1bc55').removeClass('show')
+            $('#skipped-collapse-9c3196dc-3703-477c-8004-3ed261e1bc55').removeClass('show')
+            $('#skipped-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').addClass('collapsed')
+            $('#skipped-collapse-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').addClass('collapsed')
+            $('#skipped-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').removeClass('show')
+            $('#skipped-collapse-5e7cf838-ef7d-48de-a5ee-0b3d10166dd3').removeClass('show')
+            $('#skipped-b4263a4f-7019-4aae-827e-4a919303242d').addClass('collapsed')
+            $('#skipped-collapse-b4263a4f-7019-4aae-827e-4a919303242d').addClass('collapsed')
+            $('#skipped-b4263a4f-7019-4aae-827e-4a919303242d').removeClass('show')
+            $('#skipped-collapse-b4263a4f-7019-4aae-827e-4a919303242d').removeClass('show')
+            $('#skipped-a4cc6f34-510e-469f-bdc9-85ed52ee7281').addClass('collapsed')
+            $('#skipped-collapse-a4cc6f34-510e-469f-bdc9-85ed52ee7281').addClass('collapsed')
+            $('#skipped-a4cc6f34-510e-469f-bdc9-85ed52ee7281').removeClass('show')
+            $('#skipped-collapse-a4cc6f34-510e-469f-bdc9-85ed52ee7281').removeClass('show')
+            $('#skipped-f12a85ac-afc9-4702-9274-6d090118985e').addClass('collapsed')
+            $('#skipped-collapse-f12a85ac-afc9-4702-9274-6d090118985e').addClass('collapsed')
+            $('#skipped-f12a85ac-afc9-4702-9274-6d090118985e').removeClass('show')
+            $('#skipped-collapse-f12a85ac-afc9-4702-9274-6d090118985e').removeClass('show')
+            $('#skipped-6179af8c-7ecd-4261-a1f0-fe09a6d48643').addClass('collapsed')
+            $('#skipped-collapse-6179af8c-7ecd-4261-a1f0-fe09a6d48643').addClass('collapsed')
+            $('#skipped-6179af8c-7ecd-4261-a1f0-fe09a6d48643').removeClass('show')
+            $('#skipped-collapse-6179af8c-7ecd-4261-a1f0-fe09a6d48643').removeClass('show')
+            $('#skipped-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').addClass('collapsed')
+            $('#skipped-collapse-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').addClass('collapsed')
+            $('#skipped-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').removeClass('show')
+            $('#skipped-collapse-80f67bc4-f58d-4aa1-8887-26a4b5a7eb3a').removeClass('show')
+            $('#skipped-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').addClass('collapsed')
+            $('#skipped-collapse-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').addClass('collapsed')
+            $('#skipped-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').removeClass('show')
+            $('#skipped-collapse-0d5e41e5-4e7e-4411-9a0a-242ba158fcd9').removeClass('show')
+            $('#skipped-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').addClass('collapsed')
+            $('#skipped-collapse-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').addClass('collapsed')
+            $('#skipped-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').removeClass('show')
+            $('#skipped-collapse-3ec2dff8-890e-4bba-9a5c-e7cd5a7d322b').removeClass('show')
+            $('#skipped-7f5894bb-7c91-41d9-965b-06eba031eed5').addClass('collapsed')
+            $('#skipped-collapse-7f5894bb-7c91-41d9-965b-06eba031eed5').addClass('collapsed')
+            $('#skipped-7f5894bb-7c91-41d9-965b-06eba031eed5').removeClass('show')
+            $('#skipped-collapse-7f5894bb-7c91-41d9-965b-06eba031eed5').removeClass('show')
+            $('#skipped-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').addClass('collapsed')
+            $('#skipped-collapse-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').addClass('collapsed')
+            $('#skipped-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').removeClass('show')
+            $('#skipped-collapse-e79a5c37-cbc0-49b1-bf6f-b7ce5e3777ab').removeClass('show')
+            $('#skipped-ae550a29-1e53-4e41-8880-a4441afe87bd').addClass('collapsed')
+            $('#skipped-collapse-ae550a29-1e53-4e41-8880-a4441afe87bd').addClass('collapsed')
+            $('#skipped-ae550a29-1e53-4e41-8880-a4441afe87bd').removeClass('show')
+            $('#skipped-collapse-ae550a29-1e53-4e41-8880-a4441afe87bd').removeClass('show')
+            $('#skipped-1090b545-2b13-47a5-a364-7a185ff1e49c').addClass('collapsed')
+            $('#skipped-collapse-1090b545-2b13-47a5-a364-7a185ff1e49c').addClass('collapsed')
+            $('#skipped-1090b545-2b13-47a5-a364-7a185ff1e49c').removeClass('show')
+            $('#skipped-collapse-1090b545-2b13-47a5-a364-7a185ff1e49c').removeClass('show')
+            $('#skipped-5f00c4f5-d6b5-4c35-987f-4d453ff95916').addClass('collapsed')
+            $('#skipped-collapse-5f00c4f5-d6b5-4c35-987f-4d453ff95916').addClass('collapsed')
+            $('#skipped-5f00c4f5-d6b5-4c35-987f-4d453ff95916').removeClass('show')
+            $('#skipped-collapse-5f00c4f5-d6b5-4c35-987f-4d453ff95916').removeClass('show')
+            $('#skipped-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').addClass('collapsed')
+            $('#skipped-collapse-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').addClass('collapsed')
+            $('#skipped-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').removeClass('show')
+            $('#skipped-collapse-15038c0e-7a50-4a6f-aabf-8ba0ccaa6e14').removeClass('show')
+            $('#skipped-3fba1f2c-e1bc-475d-8660-c533bb245fd0').addClass('collapsed')
+            $('#skipped-collapse-3fba1f2c-e1bc-475d-8660-c533bb245fd0').addClass('collapsed')
+            $('#skipped-3fba1f2c-e1bc-475d-8660-c533bb245fd0').removeClass('show')
+            $('#skipped-collapse-3fba1f2c-e1bc-475d-8660-c533bb245fd0').removeClass('show')
+            $('#skipped-6280bdff-b212-47b2-a6aa-f770aea750bd').addClass('collapsed')
+            $('#skipped-collapse-6280bdff-b212-47b2-a6aa-f770aea750bd').addClass('collapsed')
+            $('#skipped-6280bdff-b212-47b2-a6aa-f770aea750bd').removeClass('show')
+            $('#skipped-collapse-6280bdff-b212-47b2-a6aa-f770aea750bd').removeClass('show')
+            $('#skipped-b748f403-5033-4ed0-8324-d81c7043e350').addClass('collapsed')
+            $('#skipped-collapse-b748f403-5033-4ed0-8324-d81c7043e350').addClass('collapsed')
+            $('#skipped-b748f403-5033-4ed0-8324-d81c7043e350').removeClass('show')
+            $('#skipped-collapse-b748f403-5033-4ed0-8324-d81c7043e350').removeClass('show')
+            $('#skipped-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').addClass('collapsed')
+            $('#skipped-collapse-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').addClass('collapsed')
+            $('#skipped-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').removeClass('show')
+            $('#skipped-collapse-c2e59fa0-6aa1-489c-9587-bbf0ed8e12a7').removeClass('show')
+            $('#skipped-516b3b34-0158-4fa5-8780-d5143d03142c').addClass('collapsed')
+            $('#skipped-collapse-516b3b34-0158-4fa5-8780-d5143d03142c').addClass('collapsed')
+            $('#skipped-516b3b34-0158-4fa5-8780-d5143d03142c').removeClass('show')
+            $('#skipped-collapse-516b3b34-0158-4fa5-8780-d5143d03142c').removeClass('show')
+            $('#skipped-1437c78e-ff6a-4b72-9636-8e223f5ab567').addClass('collapsed')
+            $('#skipped-collapse-1437c78e-ff6a-4b72-9636-8e223f5ab567').addClass('collapsed')
+            $('#skipped-1437c78e-ff6a-4b72-9636-8e223f5ab567').removeClass('show')
+            $('#skipped-collapse-1437c78e-ff6a-4b72-9636-8e223f5ab567').removeClass('show')
+            $('#skipped-44a53a07-54bf-4170-9992-fe9b98ad999f').addClass('collapsed')
+            $('#skipped-collapse-44a53a07-54bf-4170-9992-fe9b98ad999f').addClass('collapsed')
+            $('#skipped-44a53a07-54bf-4170-9992-fe9b98ad999f').removeClass('show')
+            $('#skipped-collapse-44a53a07-54bf-4170-9992-fe9b98ad999f').removeClass('show')
+            $('#skipped-467af38e-923f-468b-8990-9320cb8b7115').addClass('collapsed')
+            $('#skipped-collapse-467af38e-923f-468b-8990-9320cb8b7115').addClass('collapsed')
+            $('#skipped-467af38e-923f-468b-8990-9320cb8b7115').removeClass('show')
+            $('#skipped-collapse-467af38e-923f-468b-8990-9320cb8b7115').removeClass('show')
+            $('#skipped-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').addClass('collapsed')
+            $('#skipped-collapse-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').addClass('collapsed')
+            $('#skipped-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').removeClass('show')
+            $('#skipped-collapse-8b3b0fcc-19bf-48ac-9b9a-214f42a5b40e').removeClass('show')
+            $('#skipped-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').addClass('collapsed')
+            $('#skipped-collapse-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').addClass('collapsed')
+            $('#skipped-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').removeClass('show')
+            $('#skipped-collapse-4cf4daee-00c1-45a0-8c6d-ac3ad2a5cbcf').removeClass('show')
+            $('#skipped-dcb494a4-6aff-419f-aeb4-9c343b0944bf').addClass('collapsed')
+            $('#skipped-collapse-dcb494a4-6aff-419f-aeb4-9c343b0944bf').addClass('collapsed')
+            $('#skipped-dcb494a4-6aff-419f-aeb4-9c343b0944bf').removeClass('show')
+            $('#skipped-collapse-dcb494a4-6aff-419f-aeb4-9c343b0944bf').removeClass('show')
+            $('#skipped-83666a8c-60af-4961-9b88-a44de273529a').addClass('collapsed')
+            $('#skipped-collapse-83666a8c-60af-4961-9b88-a44de273529a').addClass('collapsed')
+            $('#skipped-83666a8c-60af-4961-9b88-a44de273529a').removeClass('show')
+            $('#skipped-collapse-83666a8c-60af-4961-9b88-a44de273529a').removeClass('show')
+            $('#skipped-37129e46-37f8-4d09-8864-00fc7d3e5380').addClass('collapsed')
+            $('#skipped-collapse-37129e46-37f8-4d09-8864-00fc7d3e5380').addClass('collapsed')
+            $('#skipped-37129e46-37f8-4d09-8864-00fc7d3e5380').removeClass('show')
+            $('#skipped-collapse-37129e46-37f8-4d09-8864-00fc7d3e5380').removeClass('show')
+            $('#skipped-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').addClass('collapsed')
+            $('#skipped-collapse-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').addClass('collapsed')
+            $('#skipped-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').removeClass('show')
+            $('#skipped-collapse-5dfa356b-672c-40fa-9aa6-38cc23d2edbb').removeClass('show')
+            $('#skipped-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').addClass('collapsed')
+            $('#skipped-collapse-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').addClass('collapsed')
+            $('#skipped-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').removeClass('show')
+            $('#skipped-collapse-67ae4c41-2df0-4e83-aeba-d8be6580f1a2').removeClass('show')
+            $('#skipped-65f209b9-beac-4405-850c-92e7b0d02cbd').addClass('collapsed')
+            $('#skipped-collapse-65f209b9-beac-4405-850c-92e7b0d02cbd').addClass('collapsed')
+            $('#skipped-65f209b9-beac-4405-850c-92e7b0d02cbd').removeClass('show')
+            $('#skipped-collapse-65f209b9-beac-4405-850c-92e7b0d02cbd').removeClass('show')
+            $('#skipped-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').addClass('collapsed')
+            $('#skipped-collapse-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').addClass('collapsed')
+            $('#skipped-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').removeClass('show')
+            $('#skipped-collapse-fc4df747-781e-4fd1-8e55-8bbc94ba6cde').removeClass('show')
+            $('#skipped-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').addClass('collapsed')
+            $('#skipped-collapse-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').addClass('collapsed')
+            $('#skipped-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').removeClass('show')
+            $('#skipped-collapse-4c73c5bf-ef54-4f4d-b8e6-b4e711ed6cd7').removeClass('show')
+            $('#skipped-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').addClass('collapsed')
+            $('#skipped-collapse-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').addClass('collapsed')
+            $('#skipped-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').removeClass('show')
+            $('#skipped-collapse-6b1771a1-ede8-4b6a-9519-d5a84295a1ab').removeClass('show')
+            $('#skipped-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').addClass('collapsed')
+            $('#skipped-collapse-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').addClass('collapsed')
+            $('#skipped-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').removeClass('show')
+            $('#skipped-collapse-b5c97e9d-a921-4fa5-8d0e-23c542b0144a').removeClass('show')
+            $('#skipped-9203669f-8d61-4708-98f7-8fbd076219fd').addClass('collapsed')
+            $('#skipped-collapse-9203669f-8d61-4708-98f7-8fbd076219fd').addClass('collapsed')
+            $('#skipped-9203669f-8d61-4708-98f7-8fbd076219fd').removeClass('show')
+            $('#skipped-collapse-9203669f-8d61-4708-98f7-8fbd076219fd').removeClass('show')
+            $('#skipped-e5a7763b-80a1-4654-9a20-f15486b80e39').addClass('collapsed')
+            $('#skipped-collapse-e5a7763b-80a1-4654-9a20-f15486b80e39').addClass('collapsed')
+            $('#skipped-e5a7763b-80a1-4654-9a20-f15486b80e39').removeClass('show')
+            $('#skipped-collapse-e5a7763b-80a1-4654-9a20-f15486b80e39').removeClass('show')
+            $('#skipped-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').addClass('collapsed')
+            $('#skipped-collapse-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').addClass('collapsed')
+            $('#skipped-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').removeClass('show')
+            $('#skipped-collapse-856227a2-8d2d-4aee-9f8a-fa65d0d436c3').removeClass('show')
+            $('#skipped-27612e99-3a5f-4b36-a433-755a46d087cf').addClass('collapsed')
+            $('#skipped-collapse-27612e99-3a5f-4b36-a433-755a46d087cf').addClass('collapsed')
+            $('#skipped-27612e99-3a5f-4b36-a433-755a46d087cf').removeClass('show')
+            $('#skipped-collapse-27612e99-3a5f-4b36-a433-755a46d087cf').removeClass('show')
+            $('#skipped-06849464-3d6f-43c5-9269-0c4973fc0bed').addClass('collapsed')
+            $('#skipped-collapse-06849464-3d6f-43c5-9269-0c4973fc0bed').addClass('collapsed')
+            $('#skipped-06849464-3d6f-43c5-9269-0c4973fc0bed').removeClass('show')
+            $('#skipped-collapse-06849464-3d6f-43c5-9269-0c4973fc0bed').removeClass('show')
+            $('#skipped-c1b371ac-e893-4fc7-9a80-222e8907d392').addClass('collapsed')
+            $('#skipped-collapse-c1b371ac-e893-4fc7-9a80-222e8907d392').addClass('collapsed')
+            $('#skipped-c1b371ac-e893-4fc7-9a80-222e8907d392').removeClass('show')
+            $('#skipped-collapse-c1b371ac-e893-4fc7-9a80-222e8907d392').removeClass('show')
+            $('#skipped-baa11a2e-b4d9-41a3-bbe9-6c84df986148').addClass('collapsed')
+            $('#skipped-collapse-baa11a2e-b4d9-41a3-bbe9-6c84df986148').addClass('collapsed')
+            $('#skipped-baa11a2e-b4d9-41a3-bbe9-6c84df986148').removeClass('show')
+            $('#skipped-collapse-baa11a2e-b4d9-41a3-bbe9-6c84df986148').removeClass('show')
+        $('#openAllSkipped').html("Expand All Skipped Tests");
+        break;
+}
+clickCount = clickCount > 1 ? 1 : ++clickCount;
+$(this).data("clickCount", clickCount)
+})
+</script>
+
+<!-- Show/Hide The Failures -->
+
+<script>
+$('#openAllFailed').on('click', function(e) {
+let clickCount = $(this).data("clickCount") || 1
+let failedItemContent
+let failedItemHeading
+switch (clickCount){
+    case 1:
+        $('#openAllFailed').html("Collapse All Failed Tests");
+        break;
+    case 2:
+        $('#openAllFailed').html("Expand All Failed Tests");
+        break;
+}
+clickCount = clickCount > 1 ? 1 : ++clickCount;
+$(this).data("clickCount", clickCount)
+})
+</script>
+
+<!-- Show/Hide The Toggles When Scrolling The Page -->
+
+<script>
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("topOfRequestsScreen").style.display = "block";
+    document.getElementById("topOfFailuresScreen").style.display = "block";
+    document.getElementById("topOfSkippedScreen").style.display = "block";
+    document.getElementById("openAllRequests").style.display = "none";
+
+    
+  } else {
+    document.getElementById("topOfRequestsScreen").style.display = "none";
+    document.getElementById("topOfFailuresScreen").style.display = "none";
+    document.getElementById("topOfSkippedScreen").style.display = "none";
+    document.getElementById("openAllRequests").style.display = "block";
+
+  }
+}
+
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+
+<!-- Creates The Iteration Tabs -->
+
+<script type="text/javascript">
+    "use strict";
+
+window.onload = function () {
+
+  // hides all blocks of response
+  var allItems = document.querySelectorAll('[class*=iteration-]');
+  allItems.forEach(function(elem){
+    elem.style.display = 'none';
+  });
+
+   
+  let totalIterations = 1;
+   
+
+  let menu = document.querySelector('#execution-menu .nav');
+
+  for(var i = 0; i < totalIterations; i++)
+  {
+    let li = document.createElement('li');
+    li.appendChild(document.createTextNode((i + 1)));
+    li.setAttribute('id', 'iteration-' + i);
+    li.classList.add("custom-tab");
+    li.classList.add("itPassed");
+
+    li.addEventListener('click', function() {
+
+      let allItems = document.querySelectorAll('[class*=iteration-]');
+      allItems.forEach(function(elem) {
+        elem.style.display = 'none';
+      })
+
+      let allMenus = document.querySelectorAll('[id*=iteration-]');
+      allMenus.forEach(function(elem){
+        elem.style.borderBottom = 'none';
+      })
+      
+      this.style.borderBottom = 'solid 3px #032a33';
+
+      let items = document.querySelectorAll("." + this.id);
+      items.forEach(function(elem) {
+        elem.style.display = elem.style.display == 'block' ? 'none' : 'block';
+      })
+    });
+
+    menu.appendChild(li);
+  }
+
+    //shows first tab data
+  document.getElementById('iteration-0').click();
+  document.getElementById('iterationSelected').innerHTML = `Iteration ${document.getElementById('iteration-0').innerHTML} selected`
+  
+}
+</script>
+
+<!-- Create the Selected Iteration Label -->
+
+<script>
+$(document).ready(function(){
+    $(function() {
+        $("#iterationList li").click(function() {
+            document.getElementById('iterationSelected').innerHTML = "Iteration " + this.innerHTML + " selected"
+        });
+    });
+});
+</script>
+
+<!-- Filter Action for the Iterations -->
+
+<script>
+$(document).ready(function(){
+  $("#filterInput").on("input paste", function() {
+    var value = $(this).val();
+    $("#iterationList li").filter(function() {
+      $(this).toggle($(this).text().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+<!-- Set The Theme Of The Report -->
+
+<script>
+function setTheme(themeName) {
+    localStorage.setItem('theme', themeName);
+    document.body.className = themeName;
+}
+
+function toggleTheme() {
+    if (localStorage.getItem('theme') === 'theme-light') {
+        setTheme('theme-dark');
+    } else {
+        setTheme('theme-light');
+    }
+}
+
+(function () {
+    if (localStorage.getItem('theme') === 'theme-light') {
+        setTheme('theme-light');
+        document.getElementById('slider').checked = false;
+    } else {
+        setTheme('theme-dark');
+        document.getElementById('slider').checked = true;
+    }
+})();
+</script>
+<script>
+  window.onload = function () {
+    document.querySelectorAll('.collapse').forEach(el => el.classList.remove('collapsed'));
+    document.querySelectorAll('.collapse').forEach(el => el.classList.add('show'));
+    document.querySelectorAll('.requests').forEach(el => el.classList.remove('collapsed'));
+    document.querySelectorAll('.requests').forEach(el => el.classList.add('show'));
+
+    // Optional: Update the button text to reflect expanded state
+    const expandButton = document.getElementById('openAllRequests');
+    if (expandButton) expandButton.innerText = "Collapse Requests";
+  };
+</script>

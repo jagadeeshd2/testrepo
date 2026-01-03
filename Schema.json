@@ -1,0 +1,985 @@
+{
+  "authSchema": {
+    "type": "object",
+    "required": ["request"],
+    "properties": {
+        "request": {
+            "type": "object",
+            "required": ["mobileNo"],
+            "properties": {
+                "mobileNo": { "type": "string" }
+            }
+        }
+    }
+ },
+  "loginSchema":  {
+    "type": "object",
+    "required": ["status", "statusCode", "statusMessage", "response", "successful"],
+    "properties": {
+        "status": { "type": "string" },
+        "statusCode": { "type": "string" },
+        "statusMessage": { "type": "string" },
+        "response": {
+            "type": "object",
+            "required": ["isUserLogged", "isTokenExpired", "oauthToken", "jwt", "referCode", "userId", "isGuest"],
+            "properties": {
+                "isUserLogged": { "type": "string" },
+                "isTokenExpired": { "type": "string" },
+                "oauthToken": { "type": "string" },
+                "jwt": { "type": "string" },
+                "referCode": { "type": "string" },
+                "userId": { "type": "number" },
+                "isGuest": { "type": "boolean" }
+            }
+        },
+        "successful": { "type": "boolean" }
+    }
+},
+  "invalidLoginSchema": {
+  type: "object",
+  required: ["status", "statusCode", "statusMessage", "response", "successful"],
+  properties: {
+    status: { type: "string" },
+    statusCode: { type: "string" },
+    statusMessage: { type: "string" },
+    response: { type: ["object", "null"] },
+    successful: { type: "boolean" }
+  }
+}
+   "validLoginSchema" : {
+    "type": "object",
+    "required": ["status", "statusCode", "statusMessage", "response", "successful"],
+    "properties": {
+        "status": { "type": "string" },
+        "statusCode": { "type": "string" },
+        "statusMessage": { "type": "string" },
+        "response": {
+            "type": "object",
+            "required": ["isUserLogged", "isTokenExpired", "oauthToken", "jwt", "referCode", "userId", "isGuest"],
+            "properties": {
+                "isUserLogged": { "type": "string" },
+                "isTokenExpired": { "type": "string" },
+                "oauthToken": { "type": "string" },
+                "jwt": { "type": "string" },
+                "referCode": { "type": "string" },
+                "userId": { "type": "number" },
+                "isGuest": { "type": "boolean" }
+            }
+        },
+        "successful": { "type": "boolean" }
+    }
+ "globalsearchSchema": {
+    "type": "object",
+    "required": ["status", "data"],
+    "properties": {
+        "status": {
+            "type": "object",
+            "required": ["success", "code", "message", "timestamp"],
+            "properties": {
+                "success": { "type": "boolean" },
+                "code": { "type": "string" },
+                "message": { "type": "string" },
+                "timestamp": { "type": "string" }
+            }
+        },
+        "data": {
+            "type": "object",
+            "required": ["machineDetails", "itemDetails", "categoryDetails"],
+            "properties": {
+                "machineDetails": { "type": "array" },
+                "itemDetails": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["id", "name", "image_path"],
+                        "properties": {
+                            "id": { "type": "number" },
+                            "name": { "type": "string" },
+                            "image_path": { "type": "string" }
+                        }
+                    }
+                },
+                "categoryDetails": { "type": "array" }
+            }
+        }
+    }
+ },
+  "globalSelectSchema":  {"type": "object",
+    "required": ["status", "data"],
+    "properties": {
+        "status": {
+            "type": "object",
+            "required": ["success", "code", "message", "timestamp"],
+            "properties": {
+                "success": {"type": "boolean"},
+                "code": {"type": "string"},
+                "message": {"type": "string"},
+                "timestamp": {"type": "string"}
+            }
+        },
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["vmId", "vmName", "address", "slotDetails"],
+                "properties": {
+                    "vmId": {"type": "number"},
+                    "vmName": {"type": "string"},
+                    "address": {"type": "string"},
+                    "slotDetails": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["slotId", "count", "mvId", "mvName", "imageUrl", "mvMrp", "mvOfferPrice"],
+                            "properties": {
+                                "slotId": {"type": "number"},
+                                "count": {"type": "number"},
+                                "mvId": {"type": "number"},
+                                "mvName": {"type": "string"},
+                                "imageUrl": {"type": "string"},
+                                "mvMrp": {"type": "number"},
+                                "mvOfferPrice": {"type": "number"}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+},
+  "clearCartSchema": {
+    "type": "object",
+    "required": ["status", "data"],
+    "properties": {
+        "status": {
+            "type": "object",
+            "required": ["success", "code", "message", "timestamp"],
+            "properties": {
+                "success": {"type": "boolean"},
+                "code": {"type": "string"},
+                "message": {"type": "string"},
+                "timestamp": {"type": "string"}
+            }
+        },
+        "data": {"type": "array"}
+    }
+},
+   "addCartSchema": {
+    "type": "object",
+    "required": ["status", "data"],
+    "properties": {
+        "status": {
+            "type": "object",
+            "required": ["success", "code", "message", "timestamp"],
+            "properties": {
+                "success": {"type": "boolean"},
+                "code": {"type": "string"},
+                "message": {"type": "string"},
+                "timestamp": {"type": "string"}
+            }
+        },
+        "data": {
+            "type": "object",
+            "required": ["reward", "items", "comboDetails"],
+            "properties": {
+                "reward": {"type": ["object", "null"]},
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["mvId", "mvName", "count", "amount", "type", "slotId", "discountApplied", "discountedAmount", "variantImages"],
+                        "properties": {
+                            "mvId": {"type": "number"},
+                            "mvName": {"type": "string"},
+                            "count": {"type": "number"},
+                            "amount": {"type": "number"},
+                            "type": {"type": "string"},
+                            "slotId": {"type": "number"},
+                            "discountApplied": {"type": "boolean"},
+                            "discountedAmount": {"type": ["number", "null"]},
+                            "variantImages": {"type": "array"}
+                        }
+                    }
+                },
+                "comboDetails": {"type": ["object", "null"]}
+            }
+        }
+    }
+},
+  "fetchCartSchema": {
+    "type": "object",
+    "required": ["status", "data"],
+    "properties": {
+        "status": {
+            "type": "object",
+            "required": ["success", "code", "message", "timestamp"],
+            "properties": {
+                "success": {"type": "boolean"},
+                "code": {"type": "string"},
+                "message": {"type": "string"},
+                "timestamp": {"type": "string"}
+            }
+        },
+        "data": {
+            "type": "object",
+            "required": ["reward", "items", "comboDetails"],
+            "properties": {
+                "reward": {"type": ["object", "null"]},
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["mvId", "mvName", "count", "amount", "type", "slotId", "discountApplied", "discountedAmount", "variantImages"],
+                        "properties": {
+                            "mvId": {"type": "number"},
+                            "mvName": {"type": "string"},
+                            "count": {"type": "number"},
+                            "amount": {"type": "number"},
+                            "type": {"type": "string"},
+                            "slotId": {"type": "number"},
+                            "discountApplied": {"type": "boolean"},
+                            "discountedAmount": {"type": ["number", "null"]},
+                            "variantImages": {"type": "array"}
+                        }
+                    }
+                },
+                "comboDetails": {"type": ["object", "null"]}
+            }
+        }
+    }
+},
+  "createOrderSchema": {
+    "type": "object",
+    "required": ["status", "data"],
+    "properties": {
+        "status": {
+            "type": "object",
+            "required": ["success", "code", "message", "timestamp"],
+            "properties": {
+                "success": {"type": "boolean"},
+                "code": {"type": "string"},
+                "message": {"type": "string"},
+                "timestamp": {"type": "string"}
+            }
+        },
+        "data": {
+            "type": "object",
+            "required": ["orderId", "amount"],
+            "properties": {
+                "orderId": {"type": "string"},
+                "amount": {"type": "number"}
+            }
+        }
+    }
+},
+  "paymentSchema": {
+            "type": "object",
+            "required": ["status", "data"],
+            "properties": {
+                "status": {
+                    "type": "object",
+                    "required": ["success", "code", "message", "timestamp"],
+                    "properties": {
+                        "success": { "const": true },
+                        "code": { "const": "OK" },
+                        "message": { "const": "Accepted" },
+                        "timestamp": { "type": "string" }
+                    }
+                },
+                "data": {
+                    "type": "object",
+                    "required": ["paytmUpiOptions", "sodexoRedirectOptions"],
+                    "properties": {
+                        "paytmUpiOptions": { "type": ["object", "null"] },
+                        "sodexoRedirectOptions": { "type": ["object", "null"] }
+                    }
+                }
+            }
+        
+},
+  "confirmOrderSchema": {
+            "type": "object",
+            "required": ["status", "data"],
+            "properties": {
+                "status": {
+                    "type": "object",
+                    "required": ["success", "code", "message", "timestamp"],
+                    "properties": {
+                        "success": { "const": true },
+                        "code": { "const": "OK" },
+                        "message": { "const": "Success" },
+                        "timestamp": { "type": "string" }
+                    }
+                },
+                "data": {
+                    "type": "object",
+                    "required": [
+                        "orderId",
+                        "status",
+                        "displayStatus",
+                        "vendingMachineId",
+                        "vendingMachineAddress",
+                        "paymentId",
+                        "amount",
+                        "source",
+                        "pickupTime",
+                        "pickupTimeMillis",
+                        "createdAt",
+                        "dcCode",
+                        "lineItems"
+                    ],
+                    "properties": {
+                        "orderId": { "type": "string" },
+                        "status": { "type": "string" },
+                        "displayStatus": { "type": "string" },
+                        "vendingMachineId": { "type": "integer" },
+                        "vendingMachineAddress": { "type": "string" },
+                        "paymentId": { "type": "integer" },
+                        "amount": { "type": "number" },
+                        "source": { "type": "string" },
+                        "pickupTime": { "type": "string" },
+                        "pickupTimeMillis": { "type": "integer" },
+                        "createdAt": { "type": "string" },
+                        "dcCode": { "type": "string" },
+                        "lineItems": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "required": ["id", "skuGroupId", "variantId", "productName", "unitCount", "mrp", "offerPrice", "imageUrl"],
+                                "properties": {
+                                    "id": { "type": "integer" },
+                                    "skuGroupId": { "type": "integer" },
+                                    "variantId": { "type": "integer" },
+                                    "productName": { "type": "string" },
+                                    "unitCount": { "type": "integer" },
+                                    "mrp": { "type": "number" },
+                                    "offerPrice": { "type": "number" },
+                                    "imageUrl": { "type": "string" }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+  "activeOrdersSchema": {
+    "type": "object",
+    "required": ["status", "data"],
+    "properties": {
+        "status": {
+            "type": "object",
+            "required": ["success", "code", "message", "timestamp"],
+            "properties": {
+                "success": {"type": "boolean"},
+                "code": {"type": "string"},
+                "message": {"type": "string"},
+                "timestamp": {"type": "string"}
+            }
+        },
+        "data": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": ["orderId", "status", "displayStatus", "vendingMachineId", "vendingMachineAddress", "paymentId", "amount", "source", "pickupTime", "pickupTimeMillis", "createdAt", "dcCode", "couponId", "lineItems"],
+                "properties": {
+                    "orderId": {"type": "string"},
+                    "status": {"type": "string"},
+                    "displayStatus": {"type": "string"},
+                    "vendingMachineId": {"type": "number"},
+                    "vendingMachineAddress": {"type": "string"},
+                    "paymentId": {"type": "number"},
+                    "amount": {"type": "number"},
+                    "source": {"type": "string"},
+                    "pickupTime": {"type": "string"},
+                    "pickupTimeMillis": {"type": "number"},
+                    "createdAt": {"type": "string"},
+                    "dcCode": {"type": "string"},
+                    "couponId": {"type": ["null", "string", "number"]},
+                    "lineItems": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["id", "skuGroupId", "variantId", "productName", "unitCount", "mrp", "offerPrice", "imageUrl"],
+                            "properties": {
+                                "id": {"type": "number"},
+                                "skuGroupId": {"type": "number"},
+                                "variantId": {"type": "number"},
+                                "productName": {"type": "string"},
+                                "unitCount": {"type": "number"},
+                                "mrp": {"type": "number"},
+                                "offerPrice": {"type": "number"},
+                                "imageUrl": {"type": "string"}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+},
+  "orderHistory": {"type": "object",
+  "required": ["status", "statusCode", "statusMessage", "response", "successful"],
+  "properties": {
+    "status": {"type": "string"},
+    "statusCode": {"type": "string"},
+    "statusMessage": {"type": "string"},
+    "response": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+            "vendingMachineId",
+            "vendingMachineAddress",
+            "paymentId",
+            "orderId",
+            "mobileNumber",
+            "status",
+            "displayStatus",
+            "amount",
+            "mrp",
+            "username",
+            "email",
+            "phone",
+            "coupon",
+            "couponDescription",
+            "cashback",
+            "source",
+            "pickupTime",
+            "dcCode",
+            "userId",
+            "orderLineItems"
+        ],
+        "properties": {
+            "vendingMachineId": {"type": "number"},
+            "vendingMachineAddress": {"type": "string"},
+            "paymentId": {"oneOf": [{"type": "null"}, {"type": "number"}]},
+            "orderId": {"type": "string"},
+            "mobileNumber": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+            "status": {"type": "string"},
+            "displayStatus": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+            "amount": {"type": "number"},
+            "mrp": {"type": "number"},
+            "username": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+            "email": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+            "phone": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+            "coupon": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+            "couponDescription": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+            "cashback": {"oneOf": [{"type": "null"}, {"type": "string"}, {"type": "number"}]},
+            "source": {"type": "string"},
+            "pickupTime": {"oneOf": [{"type": "null"}, {"type": "number"}]},
+            "dcCode": {"oneOf": [{"type": "null"}, {"type": "string"}]},
+            "userId": {"type": "number"},
+            "orderLineItems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                    "id",
+                    "skuGroupId",
+                    "variantId",
+                    "variantName",
+                    "variantFormType",
+                    "itemQuantity",
+                    "imageUrl",
+                    "offerPrice",
+                    "mrp"
+                ],
+                "properties": {
+                  "id": {"oneOf": [{"type": "string"}, {"type": "number"}]},
+                  "skuGroupId": {"type": "number"},
+                  "variantId": {"type": "number"},
+                  "variantName": {"type": "string"},
+                  "variantFormType": {"type": "string"},
+                  "itemQuantity": {"type": "number"},
+                  "imageUrl": {"type": "string"},
+                  "offerPrice": {"type": "number"},
+                  "mrp": {"type": "number"}
+                }
+              }
+            }
+        }
+      }
+    },
+    "successful": {"type": "boolean"}
+  }
+},
+  "nearbyVmSchema": {"type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "const": true },
+                    "code": { "const": "OK" },
+                    "message": { "const": "Success" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "object",
+                "required": ["recentMachines", "nearbyMachines"],
+                "properties": {
+                    "recentMachines": {
+                        "type": "array",
+                        "items": { "type": "object" } 
+                    },
+                    "nearbyMachines": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "id",
+                                "name",
+                                "address",
+                                "distance",
+                                "machineImagePath",
+                                "locationTypeImagePath"
+                            ],
+                            "properties": {
+                                "id": { "type": "integer" },
+                                "name": { "type": "string" },
+                                "address": { "type": "string" },
+                                "distance": { "type": "integer" },
+                                "machineImagePath": { "type": "string" },
+                                "locationTypeImagePath": { "anyOf": [{ "type": "string" }, { "type": "null" }] }
+                            }
+                        }
+                    }
+                }
+            }
+        }},
+  "prePurchaseSchema": {"type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "const": true },
+                    "code": { "const": "OK" },
+                    "message": { "const": "Success" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": [
+                        "slot_id",
+                        "active",
+                        "active_count",
+                        "mv_id",
+                        "mv_name",
+                        "mrp",
+                        "offer_price",
+                        "image_path"
+                    ],
+                    "properties": {
+                        "slot_id": { "type": "integer" },
+                        "active": { "type": "boolean" },
+                        "active_count": { "type": "integer" },
+                        "mv_id": { "type": "integer" },
+                        "mv_name": { "type": "string" },
+                        "mrp": { "type": "number" },
+                        "offer_price": { "type": "number" },
+                        "quantity_value": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
+                        "quantity_type": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
+                        "with_packaging_weight": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
+                        "mv_description": { "type": "string" },
+                        "image_path": { "type": "string" },
+                        "offer_details": { "anyOf": [{ "type": "object" }, { "type": "null" }] }
+                    }
+                }
+            }
+        }},
+  "todaySpecialSchema": {"type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "const": true },
+                    "code": { "const": "OK" },
+                    "message": { "const": "Success" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": [
+                        "priority",
+                        "cashback_flat",
+                        "cashback_percent",
+                        "slot_id",
+                        "active_count",
+                        "mv_id",
+                        "mv_name",
+                        "mrp",
+                        "offer_price",
+                        "image_path"
+                    ],
+                    "properties": {
+                        "priority": { "type": "integer" },
+                        "cashback_flat": { "anyOf": [{ "type": "number" }, { "type": "null" }] },
+                        "cashback_percent": { "anyOf": [{ "type": "number" }, { "type": "null" }] },
+                        "slot_id": { "type": "integer" },
+                        "active_count": { "type": "integer" },
+                        "mv_id": { "type": "integer" },
+                        "mv_name": { "type": "string" },
+                        "mrp": { "type": "number" },
+                        "offer_price": { "type": "number" },
+                        "image_path": { "type": "string" }
+                    }
+                }
+            }
+        }},
+  "fetchCatSchema": {"type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "const": true },
+                    "code": { "const": "OK" },
+                    "message": { "const": "Success" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["id", "name", "image_path"],
+                    "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" },
+                        "image_path": { "anyOf": [{ "type": "string" }, { "type": "null" }] }
+                    }
+                }
+            }
+        }},
+  "selectCatSchema": {"type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "const": true },
+                    "code": { "const": "OK" },
+                    "message": { "const": "Success" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": [
+                        "slot_id",
+                        "active",
+                        "active_count",
+                        "mv_id",
+                        "mv_name",
+                        "mrp",
+                        "offer_price",
+                        "quantity_value",
+                        "quantity_type",
+                        "with_packaging_weight",
+                        "mv_description",
+                        "image_path",
+                        "offer_details"
+                    ],
+                    "properties": {
+                        "slot_id": { "type": "integer" },
+                        "active": { "type": "boolean" },
+                        "active_count": { "type": "integer" },
+                        "mv_id": { "type": "integer" },
+                        "mv_name": { "type": "string" },
+                        "mrp": { "type": "number" },
+                        "offer_price": { "type": "number" },
+                        "quantity_value": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
+                        "quantity_type": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
+                        "with_packaging_weight": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
+                        "mv_description": { "type": "string" },
+                        "image_path": { "type": "string" },
+                        "offer_details": { "anyOf": [{ "type": "object" }, { "type": "null" }] }
+                    }
+                }
+            }
+        }},
+  "listComboSchema": {"type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "type": "boolean" },
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "required": ["id", "name", "price", "actualPrice"],
+                    "properties": {
+                        "id": { "type": "integer" },
+                        "name": { "type": "string" },
+                        "description": { "type": ["string", "null"] },
+                        "price": { "type": "number" },
+                        "image": { "type": ["string", "null"] },
+                        "activeCount": { "type": ["integer", "null"] },
+                        "actualPrice": { "type": "number" }
+                    }
+                }
+            }
+        }},
+  "addComboSchema": { "type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "type": "boolean" },
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "object",
+                "required": ["reward", "items", "comboDetails"],
+                "properties": {
+                    "reward": { "type": ["null", "object", "string", "number", "array"] },
+                    "items": { "type": ["null", "object", "string", "number", "array"] },
+                    "comboDetails": {
+                        "anyOf": [
+                            { "type": "null" },
+                            {
+                                "type": "object",
+                                "required": ["id", "name", "imageUrl", "count", "totalPrice", "actualPrice", "description", "items"],
+                                "properties": {
+                                    "id": { "type": "integer" },
+                                    "name": { "type": "string" },
+                                    "imageUrl": { "type": "string" },
+                                    "count": { "type": "integer" },
+                                    "totalPrice": { "type": "number" },
+                                    "actualPrice": { "type": "number" },
+                                    "description": { "type": "string" },
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "required": ["mvId", "mvName", "count", "amount", "type", "slotId", "discountApplied", "discountedAmount", "variantImages"],
+                                            "properties": {
+                                                "mvId": { "type": "integer" },
+                                                "mvName": { "type": "string" },
+                                                "count": { "type": "integer" },
+                                                "amount": { "type": "number" },
+                                                "type": { "type": "string" },
+                                                "slotId": { "type": "integer" },
+                                                "discountApplied": { "type": "boolean" },
+                                                "discountedAmount": { "type": ["null", "number"] },
+                                                "variantImages": { "type": ["null", "string", "object", "array"] }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        }},
+  "listCouponSchema": {"type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "type": "boolean" },
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "anyOf": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "couponId",
+                                "couponType",
+                                "couponName",
+                                "couponDescription",
+                                "couponImage",
+                                "isApplicable",
+                                "tnc",
+                                "reason"
+                            ],
+                            "properties": {
+                                "couponId": { "type": "integer" },
+                                "couponType": { "type": "integer" },
+                                "couponName": { "type": "string" },
+                                "couponDescription": { "type": "string" },
+                                "couponImage": { "type": "string" },
+                                "isApplicable": { "type": "boolean" },
+                                "tnc": { "type": ["string", "null"] },
+                                "reason": { "type": ["string", "null"] }
+                            }
+                        }
+                    },
+                    { "type": "null" }
+                ]
+            }
+        }},
+  "applyCouponSchema": {
+    "type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "type": "boolean" },
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "object",
+                "required": ["reward", "items"],
+                "properties": {
+                    "reward": {
+                        "type": ["object", "null"],
+                        "properties": {
+                            "mvId": { "type": "integer" },
+                            "mvName": { "type": "string" },
+                            "count": { "type": "integer" },
+                            "amount": { "type": "number" },
+                            "type": { "type": "string" },
+                            "slotId": { "type": "integer" },
+                            "discountApplied": { "type": "boolean" },
+                            "discountedAmount": { "type": ["number", "null"] },
+                            "variantImages": { "type": ["array", "null"] }
+                        }
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["mvId", "mvName", "count", "amount", "type", "slotId", "discountApplied", "discountedAmount", "variantImages"],
+                            "properties": {
+                                "mvId": { "type": "integer" },
+                                "mvName": { "type": "string" },
+                                "count": { "type": "integer" },
+                                "amount": { "type": "number" },
+                                "type": { "type": "string" },
+                                "slotId": { "type": "integer" },
+                                "discountApplied": { "type": "boolean" },
+                                "discountedAmount": { "type": ["number", "null"] },
+                                "variantImages": { "type": ["array", "null"] }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }},
+  "profileSchema",":", { "type": "object",
+        "required": ["status", "statusCode", "statusMessage", "response", "successful"],
+        "properties": {
+            "status": { "type": "string" },
+            "statusCode": { "type": "string" },
+            "statusMessage": { "type": "string" },
+            "successful": { "type": "boolean" },
+            "response": {
+                "type": "object",
+                "required": ["mobileNo", "emailId", "dob", "gender", "name", "activeSessionCount", "googleId"],
+                "properties": {
+                    "mobileNo": { "type": "string" },
+                    "emailId": { "type": "string" },
+                    "dob": { "type": "string" },
+                    "gender": { "type": "string" },
+                    "city": { "type": ["string", "null"] },
+                    "name": { "type": "string" },
+                    "state": { "type": ["string", "null"] },
+                    "referCode": { "type": "string" },
+                    "activeSessionCount": { "type": "integer" },
+                    "googleId": { "type": "string" }
+                }
+            }
+        }},
+  "loyaltySchema",":", {"type": "object",
+        "required": ["status", "data"],
+        "properties": {
+            "status": {
+                "type": "object",
+                "required": ["success", "code", "message", "timestamp"],
+                "properties": {
+                    "success": { "type": "boolean" },
+                    "code": { "type": "string" },
+                    "message": { "type": "string" },
+                    "timestamp": { "type": "string" }
+                }
+            },
+            "data": {
+                "type": "object",
+                "required": [
+                    "levelImage",
+                    "levelId",
+                    "levelName",
+                    "totalMilestones",
+                    "currentLevelMilestoneCount",
+                    "daysLeft",
+                    "levelRewards"
+                ],
+                "properties": {
+                    "levelImage": { "type": "string" },
+                    "levelId": { "type": "integer" },
+                    "levelName": { "type": "string" },
+                    "totalMilestones": { "type": "integer" },
+                    "currentLevelMilestoneCount": { "type": "integer" },
+                    "daysLeft": { "type": "integer" },
+                    "levelRewards": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["milestoneCount", "rewardType", "value", "isSurprise", "isRedeemed"],
+                            "properties": {
+                                "milestoneCount": { "type": "integer" },
+                                "rewardType": { "type": "string" },
+                                "value": { "type": "number" },
+                                "isSurprise": { "type": "boolean" },
+                                "isRedeemed": { "type": "boolean" }
+                            }
+                        }
+                    }
+                }
+            }
+        }},
+  "logoutSchema",":", { "type": "object",
+        "required": ["status", "statusCode", "statusMessage", "response", "successful"],
+        "properties": {
+            "status": { "type": "string", "enum": ["SUCCESS", "FAILURE"] },
+            "statusCode": { "type": "string" },
+            "statusMessage": { "type": "string" },
+            "response": { "anyOf": [{ "type": "object" }, { "type": "null" }] },
+            "successful": { "type": "boolean" }
+        }
+}
